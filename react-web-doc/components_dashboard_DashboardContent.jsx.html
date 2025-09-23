@@ -1,0 +1,393 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/dashboard/DashboardContent.jsx</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ApiService.html">ApiService</a></li></ul><h3>Global</h3><ul><li><a href="global.html#API_ENDPOINTS">API_ENDPOINTS</a></li><li><a href="global.html#ApproverHierarchyForm">ApproverHierarchyForm</a></li><li><a href="global.html#BackButton">BackButton</a></li><li><a href="global.html#BlockForm">BlockForm</a></li><li><a href="global.html#Checkbox">Checkbox</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#DashboardIframe">DashboardIframe</a></li><li><a href="global.html#FlutterAwareWrapper">FlutterAwareWrapper</a></li><li><a href="global.html#FlutterContext">FlutterContext</a></li><li><a href="global.html#FlutterProvider">FlutterProvider</a></li><li><a href="global.html#FormField">FormField</a></li><li><a href="global.html#MemoDetail">MemoDetail</a></li><li><a href="global.html#MemoEditForm">MemoEditForm</a></li><li><a href="global.html#MemoExplorer">MemoExplorer</a></li><li><a href="global.html#MemoForm">MemoForm</a></li><li><a href="global.html#MemoTabbedList">MemoTabbedList</a></li><li><a href="global.html#MemosPage">MemosPage</a></li><li><a href="global.html#Modal">Modal</a></li><li><a href="global.html#RoleForm">RoleForm</a></li><li><a href="global.html#SetPassword">SetPassword</a></li><li><a href="global.html#Setting">Setting</a></li><li><a href="global.html#ShiftForm">ShiftForm</a></li><li><a href="global.html#USER_ROLES">USER_ROLES</a></li><li><a href="global.html#UserForm">UserForm</a></li><li><a href="global.html#WardSelectDialog">WardSelectDialog</a></li><li><a href="global.html#WorkerStatus">WorkerStatus</a></li><li><a href="global.html#emptyLevel">emptyLevel</a></li><li><a href="global.html#errors">errors</a></li><li><a href="global.html#fieldMap">fieldMap</a></li><li><a href="global.html#getOrGenerateFcmToken">getOrGenerateFcmToken</a></li><li><a href="global.html#handleBlur">handleBlur</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#isOpen">isOpen</a></li><li><a href="global.html#method">method</a></li><li><a href="global.html#onClose">onClose</a></li><li><a href="global.html#onConfirm">onConfirm</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#touched">touched</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useFlutter">useFlutter</a></li><li><a href="global.html#useForm">useForm</a></li><li><a href="global.html#validate">validate</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/dashboard/DashboardContent.jsx</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../hooks/useAuth';
+import CrudTable from '../common/CrudTable';
+import Modal from '../ui/Modal';
+import UserForm from '../forms/UserForm';
+import RoleForm from '../forms/RoleForm';
+import BlockForm from '../forms/BlockForm';
+import ShiftForm from '../forms/ShiftForm';
+import ApproverHierarchyForm from '../forms/ApproverHierarchyForm';
+import ConfirmDialog from '../modals/ConfirmDialog';
+import { useCrud } from '../../hooks/useCrud';
+import { useOutletContext } from 'react-router-dom';
+import DashboardIframe from './DashboardIframe';
+
+/**
+ * DashboardContent component displays different content based on the active tab.
+ * It includes CRUD operations for various entities (users, roles, blocks, etc.)
+ * and a dashboard view for superusers.
+ *
+ * It leverages `useCrud` hook for data fetching and manipulation, and
+ * displays data using `CrudTable`. Modals are used for add/edit forms and
+ * a confirmation dialog for deletions.
+ *
+ * @param {object} props - The component props.
+ * @param {string} [props.activeTab='dashboard'] - The currently active tab in the dashboard.
+ */
+const DashboardContent = ({ activeTab: _propActiveTab = 'dashboard' }) => {
+  const outletCtx = useOutletContext();
+  const activeTab = outletCtx?.activeTab ?? _propActiveTab;
+  const { isSuperuser, user } = useAuth();
+  const isStaff = user?.is_staff;
+  const crudHook = useCrud(activeTab);
+  const { data, loading, fetchData, createItem, updateItem, deleteItem } = crudHook;
+
+  const [modalState, setModalState] = useState({ isOpen: false, mode: 'create', data: null });
+  const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, item: null, loading: false });
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortOrder, setSortOrder] = useState('asc');
+  const [selectedResponder, setSelectedResponder] = useState('');
+
+  useEffect(() => {
+    setSearchTerm("");
+    setSelectedResponder("");
+    if ((isSuperuser || isStaff) &amp;&amp; activeTab !== 'dashboard' &amp;&amp; activeTab !== 'settings') {
+      fetchData();
+    }
+  }, [activeTab, isSuperuser, isStaff, fetchData]);
+
+  /**
+   * Handles the click event for adding a new item.
+   * Opens the modal in 'create' mode.
+   */
+  const handleAdd = () => setModalState({ isOpen: true, mode: 'create', data: null });
+
+  /**
+   * Handles the click event for editing an existing item.
+   * Opens the modal in 'edit' mode with the item data.
+   * @param {object} item - The item to be edited.
+   */
+  const handleEdit = (item) => setModalState({ isOpen: true, mode: 'edit', data: item });
+
+  const handleDelete = (item) => setConfirmDialog({ isOpen: true, item, loading: false });
+
+
+  const confirmDelete = async () => {
+    setConfirmDialog(prev => ({ ...prev, loading: true }));
+    const result = await deleteItem(confirmDialog.item.id);
+    result.success
+      ? setConfirmDialog({ isOpen: false, item: null, loading: false })
+      : setConfirmDialog(prev => ({ ...prev, loading: false })) || alert('Failed to delete item: ' + result.error);
+  };
+
+  /**
+   * Handles the submission of the form within the modal.
+   * Calls createItem or updateItem based on the modal mode.
+   */
+
+  const handleFormSubmit = async (formData) => {
+    const result = modalState.mode === 'create'
+      ? await createItem(formData)
+      : await updateItem(modalState.data.id, formData);
+
+    result.success
+      ? setModalState({ isOpen: false, mode: 'create', data: null })
+      : alert(`Failed to ${modalState.mode} item: ` + result.error);
+  };
+
+  /**
+   * Closes the modal and resets its state.
+   */
+  const closeModal = () => setModalState({ isOpen: false, mode: 'create', data: null });
+
+  /**
+   * Returns the appropriate form component based on the active tab.
+   * @returns {React.Component | null} The form component or null if no form is defined for the tab.
+   */
+  const getFormComponent = () => {
+    const commonProps = { initialData: modalState.data, onSubmit: handleFormSubmit, onCancel: closeModal, loading: false };
+    
+    switch (activeTab) {
+      case 'users': return &lt;UserForm {...commonProps} />;
+      case 'roles': return &lt;RoleForm {...commonProps} />;
+      case 'blocks': return &lt;BlockForm {...commonProps} />;
+      case 'hierarchies': return &lt;ApproverHierarchyForm {...commonProps} />;
+      case 'shifts': return &lt;ShiftForm {...commonProps} />;
+      default: return null;
+    }
+  };
+
+  /**
+   * Defines the columns configuration for the CrudTable based on the active tab.
+   * Includes sort buttons for some columns.
+   */
+  const getColumns = () => {
+    const addSortButton = (key) => (
+      &lt;button onClick={() => setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc')} className="ml-2 text-blue-500">⇅&lt;/button>
+    );
+
+    switch (activeTab) {
+      case 'users':
+        return [
+          { key: 'institution_id', label: &lt;>Name {addSortButton('institution_id')}&lt;/> },
+          { key: 'role_name', label: &lt;>Role {addSortButton('role_name')}&lt;/>, render: (value) => value || 'N/A' },
+          { key: 'phone_number', label: &lt;>Phone {addSortButton('phone_number')}&lt;/>, render: (value) => value || 'N/A' },
+          { key: 'current_block_name', label: &lt;>Current Block {addSortButton('current_block_name')}&lt;/> },
+           { key: 'date_joined', label: 'Joined Date', render: (value) => value ? new Date(value).toLocaleDateString() : 'N/A' }
+
+        ];
+      case 'roles':
+        return [
+          { key: 'name', label: &lt;>Name {addSortButton('name')}&lt;/> },
+          { key: 'description', label: &lt;>Description {addSortButton('description')}&lt;/>, render: (value) => value || 'N/A' },
+          { key: 'is_approver', label: 'Approver', render: (value) => value ? 'Yes' : 'No' },
+          { key: 'is_responder', label: 'Responder', render: (value) => value ? 'Yes' : 'No' },
+          { key: 'is_creator', label: 'Creator', render: (value) => value ? 'Yes' : 'No' },
+        ];
+      case 'hierarchies':
+        return [
+          { key: 'id', label: 'ID' },
+          { key: 'is_active', label: 'Active', render: (val) => (val ? 'Yes' : 'No') },
+          { key: 'levels', label: 'Levels', render: (levels) => levels?.length || 0 },
+        ];
+      case 'blocks':
+        return [
+          { key: 'name', label: &lt;>Name {addSortButton('name')}&lt;/> },
+          { key: 'no_of_floors', label: 'Floors' },
+          { key: 'created_by', label: 'Created By' },
+          { key: 'created_at', label: 'Created', render: (value) => new Date(value).toLocaleDateString() },
+        ];
+      case 'shifts':
+        return [
+          { key: 'name', label: 'Name' },
+          { key: 'start_time', label: 'Start Time' },
+          { key: 'end_time', label: 'End Time' },
+        ];
+      default:
+        return [];
+    }
+  };
+
+  /**
+   * Filters and sorts the data based on the current search term, selected responder, and sort order.
+   * Handles sorting for date fields specifically.
+   * @returns {Array&lt;object>} The filtered and sorted data.
+   */
+  const filteredData = (data ?? []) 
+    ?.filter(item => {
+      const matchSearch = Object.values(item).some(value =>
+        value?.toString().toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      const matchResponder = selectedResponder ? item?.role_name === selectedResponder : true;
+      return matchSearch &amp;&amp; matchResponder;
+    })
+    .sort((a, b) => {
+  const columns = getColumns();
+  const firstKey = columns[0]?.key ?? "";
+  if (!firstKey) return 0;
+
+  const valA = a[firstKey];
+  const valB = b[firstKey];
+
+  if (valA == null || valB == null) return 0;
+
+  // Check if the field is a date field
+  const isDateField = ['date_joined', 'created_at'].includes(firstKey);
+
+  if (isDateField) {
+    const dateA = new Date(valA);
+    const dateB = new Date(valB);
+    return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+  }
+
+  const strA = valA.toString().toLowerCase?.() ?? '';
+  const strB = valB.toString().toLowerCase?.() ?? '';
+  return sortOrder === 'asc' ? strA.localeCompare(strB) : strB.localeCompare(strA);
+});
+
+  const responderOptions = [...new Set((data ?? []).map(item => item.role_name).filter(Boolean))];
+
+  // Handle dashboard view separately
+  if (activeTab === 'dashboard') {
+    return (
+      &lt;div className="p-4">
+        {isSuperuser ? (
+          &lt;DashboardIframe />
+        ) : (
+          &lt;div className="text-center py-8">
+            &lt;h2 className="text-2xl font-bold text-blue-800 mb-4">Welcome to MemoTrack&lt;/h2>
+            &lt;p className="text-gray-600">Your workspace for managing memos and communications.&lt;/p>
+          &lt;/div>
+        )}
+      &lt;/div>
+    );
+  }
+
+  return (
+    &lt;>
+      &lt;div className="p-4">
+        &lt;div className="flex flex-wrap justify-between items-center mb-4 gap-4">
+          &lt;h2 className="text-xl font-semibold">{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}&lt;/h2>
+          &lt;div className="flex gap-3 items-center">
+            {activeTab === 'users' &amp;&amp; (
+              &lt;select
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+                value={selectedResponder}
+                onChange={(e) => setSelectedResponder(e.target.value)}
+              >
+                &lt;option value="">All Responders&lt;/option>
+                {responderOptions.map(role => (
+                  &lt;option key={role} value={role}>{role}&lt;/option>
+                ))}
+              &lt;/select>
+            )}
+            &lt;input
+              type="text"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-50 px-4 py-1 text-lg text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+            />
+          &lt;/div>
+        &lt;/div>
+
+        &lt;CrudTable
+          title={`${activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}`}
+          data={filteredData}
+          columns={getColumns()}
+          onAdd={handleAdd}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          loading={loading}
+        />
+      &lt;/div>
+
+      &lt;Modal
+        isOpen={modalState.isOpen}
+        onClose={closeModal}
+        title={`${modalState.mode === 'create' ? 'Add' : 'Edit'} ${activeTab.slice(0, -1)}`}
+        size="lg"
+      >
+        {getFormComponent()}
+      &lt;/Modal>
+
+      &lt;ConfirmDialog
+        isOpen={confirmDialog.isOpen}
+        onClose={() => setConfirmDialog({ isOpen: false, item: null, loading: false })}
+        onConfirm={confirmDelete}
+        title="Delete Item"
+        message={`Are you sure you want to delete this ${activeTab.slice(0, -1)}? This action cannot be undone.`}
+        confirmText="Delete"
+        loading={confirmDialog.loading}
+      />
+    &lt;/>
+  );
+};
+
+export default DashboardContent;</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

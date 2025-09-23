@@ -1,0 +1,867 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/memos/WorkerStatus.jsx</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ApiService.html">ApiService</a></li></ul><h3>Global</h3><ul><li><a href="global.html#API_ENDPOINTS">API_ENDPOINTS</a></li><li><a href="global.html#ApproverHierarchyForm">ApproverHierarchyForm</a></li><li><a href="global.html#BackButton">BackButton</a></li><li><a href="global.html#BlockForm">BlockForm</a></li><li><a href="global.html#Checkbox">Checkbox</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#DashboardIframe">DashboardIframe</a></li><li><a href="global.html#FlutterAwareWrapper">FlutterAwareWrapper</a></li><li><a href="global.html#FlutterContext">FlutterContext</a></li><li><a href="global.html#FlutterProvider">FlutterProvider</a></li><li><a href="global.html#FormField">FormField</a></li><li><a href="global.html#MemoDetail">MemoDetail</a></li><li><a href="global.html#MemoEditForm">MemoEditForm</a></li><li><a href="global.html#MemoExplorer">MemoExplorer</a></li><li><a href="global.html#MemoForm">MemoForm</a></li><li><a href="global.html#MemoTabbedList">MemoTabbedList</a></li><li><a href="global.html#MemosPage">MemosPage</a></li><li><a href="global.html#Modal">Modal</a></li><li><a href="global.html#RoleForm">RoleForm</a></li><li><a href="global.html#SetPassword">SetPassword</a></li><li><a href="global.html#Setting">Setting</a></li><li><a href="global.html#ShiftForm">ShiftForm</a></li><li><a href="global.html#USER_ROLES">USER_ROLES</a></li><li><a href="global.html#UserForm">UserForm</a></li><li><a href="global.html#WardSelectDialog">WardSelectDialog</a></li><li><a href="global.html#WorkerStatus">WorkerStatus</a></li><li><a href="global.html#emptyLevel">emptyLevel</a></li><li><a href="global.html#errors">errors</a></li><li><a href="global.html#fieldMap">fieldMap</a></li><li><a href="global.html#getOrGenerateFcmToken">getOrGenerateFcmToken</a></li><li><a href="global.html#handleBlur">handleBlur</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#isOpen">isOpen</a></li><li><a href="global.html#method">method</a></li><li><a href="global.html#onClose">onClose</a></li><li><a href="global.html#onConfirm">onConfirm</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#touched">touched</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useFlutter">useFlutter</a></li><li><a href="global.html#useForm">useForm</a></li><li><a href="global.html#validate">validate</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/memos/WorkerStatus.jsx</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect, useRef } from 'react';
+import { MessageCircle, Tag, Trash2, Plus, X, Clock, Reply, Mic, MicOff, Phone, Lock } from 'lucide-react';
+import { useAuth } from '../../hooks/useAuth';
+import { toast } from 'react-hot-toast';
+import PhoneLink from './PhoneLink';
+
+/**
+ * WorkerStatus component displays and manages worker status updates for a memo.
+ * It includes features for adding updates, tagging roles, OTP verification,
+ * speech-to-text input (if supported by the environment), and deleting updates.
+ */
+
+const WorkerStatus = ({ memoId = 1, data = [], onChange = () => { } }) => {
+  const { user, hospital, apiService } = useAuth();
+  const isResponder = user?.is_responder;
+
+  // Modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Form state
+  const [comment, setComment] = useState('');
+  const [statusType, setStatusType] = useState('attended');
+  const [taggedRoleId, setTaggedRoleId] = useState('');
+  const [otp, setOtp] = useState('');
+  const [roles, setRoles] = useState([]);
+  const [saving, setSaving] = useState(false);
+  const [deletingId, setDeletingId] = useState(null);
+
+  // OTP logic state
+  const [hasUserCommentedBefore, setHasUserCommentedBefore] = useState(false);
+  const [needsOtp, setNeedsOtp] = useState(false);
+
+  // Speech-to-text state
+  const [isListening, setIsListening] = useState(false);
+  const [speechSupported, setSpeechSupported] = useState(false);
+  const [currentLanguage, setCurrentLanguage] = useState('Tamil');
+  const [availableLanguages, setAvailableLanguages] = useState([]);
+  const [speechFeedback, setSpeechFeedback] = useState('');
+
+  // NEW: Track accumulated speech text separately
+  const [accumulatedSpeechText, setAccumulatedSpeechText] = useState('');
+  const [lastPartialText, setLastPartialText] = useState('');
+
+  const commentInputRef = useRef(null);
+
+  // Process data with threading logic (existing logic)
+  const processData = (rawData) => {
+    const processed = rawData.map(item => ({
+      ...item,
+      can_delete: item.by === user?.id,
+      is_reply: false,
+      parent_tag: null
+    }));
+
+    const threaded = [];
+    const taggedConversations = new Map();
+
+    processed.forEach(item => {
+      if (item.tagged_role_id &amp;&amp; !item.deleted) {
+        const conversationKey = `${item.tagged_role_id}_${item.event_id}`;
+        taggedConversations.set(conversationKey, {
+          parent: item,
+          replies: []
+        });
+        threaded.push(item);
+      } else if (!item.deleted) {
+        const possibleParent = threaded.find(parent =>
+          parent.tagged_role_id &amp;&amp;
+          new Date(item.timestamp) > new Date(parent.timestamp) &amp;&amp;
+          Math.abs(new Date(item.timestamp) - new Date(parent.timestamp)) &lt; 24 * 60 * 60 * 1000
+        );
+
+        if (possibleParent) {
+          const conversationKey = `${possibleParent.tagged_role_id}_${possibleParent.event_id}`;
+          const conversation = taggedConversations.get(conversationKey);
+          if (conversation) {
+            item.is_reply = true;
+            item.parent_tag = possibleParent.tagged_role_name;
+            conversation.replies.push(item);
+          }
+        } else {
+          threaded.push(item);
+        }
+      }
+    });
+
+    const final = [];
+    threaded.forEach(item => {
+      final.push(item);
+      if (item.tagged_role_id) {
+        const conversationKey = `${item.tagged_role_id}_${item.event_id}`;
+        const conversation = taggedConversations.get(conversationKey);
+        if (conversation &amp;&amp; conversation.replies.length > 0) {
+          final.push(...conversation.replies.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)));
+        }
+      }
+    });
+
+    return final;
+  };
+
+  const processedData = processData(data);
+  const visibleItems = processedData.filter(i => !i.deleted);
+
+  // Check if user has commented before
+  useEffect(() => {
+    if (user?.id &amp;&amp; data.length > 0) {
+      const userHasCommented = data.some(item => 
+        item.by === user.id &amp;&amp; !item.deleted
+      );
+      setHasUserCommentedBefore(userHasCommented);
+    }
+  }, [user?.id, data]);
+
+  // Update OTP requirement based on user history and status type
+  useEffect(() => {
+    const shouldRequireOtp = () => {
+      // Always require OTP for completed status
+      if (statusType === 'completed') {
+        return true;
+      }
+      
+      // For other status types, only require OTP if user hasn't commented before
+      if (!hasUserCommentedBefore) {
+        return true;
+      }
+      
+      return false;
+    };
+
+    setNeedsOtp(shouldRequireOtp());
+    
+    // Clear OTP when it's not needed
+    if (!shouldRequireOtp()) {
+      setOtp('');
+    }
+  }, [statusType, hasUserCommentedBefore]);
+
+  const formatDate = (ts) => {
+    try {
+      const date = new Date(ts);
+      const now = new Date();
+      const diffMs = now - date;
+      const diffMins = Math.floor(diffMs / 60000);
+      const diffHours = Math.floor(diffMs / 3600000);
+      const diffDays = Math.floor(diffMs / 86400000);
+
+      if (diffMins &lt; 1) return 'Just now';
+      if (diffMins &lt; 60) return `${diffMins}m ago`;
+      if (diffHours &lt; 24) return `${diffHours}h ago`;
+      if (diffDays &lt; 7) return `${diffDays}d ago`;
+      return date.toLocaleDateString();
+    } catch {
+      return ts;
+    }
+  };
+
+  // Initialize speech functionality
+  useEffect(() => {
+    // Setup Flutter message listener
+    const handleFlutterMessage = (event) => {
+      const data = event.detail;
+      console.log('📨 Received from Flutter:', data);
+
+      switch (data.type) {
+        case 'speechStatus':
+          handleSpeechStatus(data);
+          break;
+        case 'speechResult':
+          handleSpeechResult(data);
+          break;
+        case 'speechLanguages':
+          setAvailableLanguages(data.languages);
+          break;
+      }
+    };
+
+    window.addEventListener('flutterMessage', handleFlutterMessage);
+
+    // Check if speech is supported and get available languages
+    if (window.SpeechToText) {
+      setSpeechSupported(true);
+      sendSpeechCommand('getAvailableLanguages');
+    }
+
+    return () => {
+      window.removeEventListener('flutterMessage', handleFlutterMessage);
+    };
+  }, []);
+
+  useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        const data = await apiService.getRoles(hospital.id);
+        const filtered = (data || []).filter((r) => (r.name?.toLowerCase() !== 'admin') &amp;&amp; (r.is_responder == true));
+        setRoles(filtered);
+      } catch (err) {
+        console.error(err);
+        toast.error('Failed to fetch roles');
+      }
+    };
+    fetchRoles();
+  }, [apiService, hospital.id]);
+
+  // Speech command sender
+  const sendSpeechCommand = (action, params = {}) => {
+    if (window.SpeechToText) {
+      window.SpeechToText.postMessage(JSON.stringify({
+        action,
+        ...params
+      }));
+    }
+  };
+
+  // Handle speech status updates from Flutter
+  const handleSpeechStatus = (data) => {
+    const { status, message, isListening: listening } = data;
+    setIsListening(listening);
+    setSpeechFeedback(message);
+
+    // Reset accumulated speech text when speech stops
+    if (!listening) {
+      setAccumulatedSpeechText('');
+      setLastPartialText('');
+    }
+
+    if (status === 'error') {
+      console.error('Speech error:', message);
+      // Reset speech state on error
+      setAccumulatedSpeechText('');
+      setLastPartialText('');
+    }
+  };
+
+  // FIXED: Handle speech results with proper accumulation
+  // FIXED: Handle speech results with proper concatenation
+  const handleSpeechResult = (data) => {
+    const { text, isFinal } = data;
+
+    if (isFinal) {
+      // Final result - concatenate with existing comment
+      setComment(prev => {
+        const newText = prev ? `${prev} ${text}`.trim() : text;
+        return newText;
+      });
+
+      // Clear accumulated speech text and partial text
+      setAccumulatedSpeechText('');
+      setLastPartialText('');
+      setSpeechFeedback('');
+    } else {
+      // Partial result - show as feedback only
+      setLastPartialText(text);
+      setSpeechFeedback(`Listening: "${text}"`);
+    }
+  };
+
+  // FIXED: Start speech recognition - don't reset accumulated text
+  const startSpeechRecognition = () => {
+    if (!speechSupported) {
+      alert('Speech recognition not available');
+      return;
+    }
+
+    // Don't reset accumulated text when starting new recognition
+    // setAccumulatedSpeechText(comment); // Remove this line
+    setLastPartialText('');
+    sendSpeechCommand('startListening', { language: currentLanguage });
+  };
+  // Stop speech recognition
+  const stopSpeechRecognition = () => {
+    sendSpeechCommand('stopListening');
+  };
+
+  // Change speech language
+  const changeSpeechLanguage = (language) => {
+    setCurrentLanguage(language);
+    sendSpeechCommand('changeLanguage', { language });
+  };
+
+  const handleSubmit = async () => {
+    if (!comment.trim()) {
+      toast.error('Please enter a comment');
+      return;
+    }
+
+    // Validate OTP if required
+    if (needsOtp &amp;&amp; (!otp || otp.length !== 6)) {
+      toast.error('Please enter a valid 6-digit OTP');
+      return;
+    }
+
+    // Validate tagged role selection
+    if (statusType === 'tagged' &amp;&amp; !taggedRoleId) {
+      toast.error('Please select a role to tag');
+      return;
+    }
+
+    setSaving(true);
+    try {
+      const payload = {
+        comment,
+        by: user.id,
+        by_institution_id: user.institution_id,
+        by_phone: user.phone_number
+      };
+
+      // Add OTP if required
+      if (needsOtp) {
+        payload.otp = otp;
+      }
+
+      if (statusType === 'tagged') {
+        const roleObj = roles.find(r => String(r.id) === String(taggedRoleId));
+        payload.tagged_role_id = taggedRoleId;
+        payload.tagged_role_name = roleObj?.name || '';
+      }
+
+      const res = await apiService.addWorkerStatus(hospital.id, memoId, {
+        event_type: statusType,
+        payload,
+        metadata: {}
+      });
+
+      if (res.isValid){
+        toast.success('Status update posted successfully');
+      }else{
+        toast.error("Wrong OTP , Try again");
+      }
+      setComment('');
+      setOtp('');
+      setTaggedRoleId('');
+      setStatusType('attended');
+      setIsModalOpen(false);
+      // Reset speech state when closing modal
+      setAccumulatedSpeechText('');
+      setLastPartialText('');
+      setSpeechFeedback('');
+      onChange?.();
+    } catch (error) {
+      console.error('Error posting status:', error);
+      toast.error(error.message || 'Failed to post status update');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleDelete = async (item) => {
+    if (!item.can_delete) return;
+    setDeletingId(item.event_id);
+    try {
+      await apiService.deleteWorkerStatus(hospital.id, memoId, item.event_id, {
+        metadata: {}
+      });
+      onChange?.();
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
+  const getStatusIcon = (item) => {
+    if (item.tagged_role_id) return &lt;Tag className="w-4 h-4 text-orange-600" />;
+    return &lt;MessageCircle className="w-4 h-4 text-blue-600" />;
+  };
+
+  const getStatusColor = (item) => {
+    if (item.is_reply) return 'bg-green-100';
+    if (item.tagged_role_id) return 'bg-orange-100';
+    return 'bg-blue-100';
+  };
+
+  function makePhoneCall(phoneNumber) {
+    const cleanNumber = phoneNumber.replace(/[^\d+]/g, '');
+
+    // Try window.open with _system first (most effective for WebViews)
+    try {
+      window.open(`tel:${cleanNumber}`, '_system');
+      return;
+    } catch (error) {
+      console.log('_system failed, trying _blank');
+    }
+
+    // Fallback to _blank
+    try {
+      window.open(`tel:${cleanNumber}`, '_blank');
+      return;
+    } catch (error) {
+      console.log('_blank failed, trying location.href');
+    }
+
+    // Final fallback
+    window.location.href = `tel:${cleanNumber}`;
+  }
+
+  const getStatusBadge = (type) => {
+    const badges = {
+      attended: { text: 'Attended', color: 'bg-green-100 text-green-800' },
+      completed: { text: 'Completed', color: 'bg-blue-100 text-blue-800' },
+      incomplete: { text: 'Incomplete', color: 'bg-yellow-100 text-yellow-800' },
+      tagged: { text: 'Tagged', color: 'bg-orange-100 text-orange-800' }
+    };
+    return badges[type] || badges.attended;
+  };
+
+  // NEW: Handle modal close to reset speech state
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setComment('');
+    setOtp('');
+    setTaggedRoleId('');
+    setStatusType('attended');
+    setAccumulatedSpeechText('');
+    setLastPartialText('');
+    setSpeechFeedback('');
+    if (isListening) {
+      stopSpeechRecognition();
+    }
+  };
+
+  // Get OTP requirement message
+  const getOtpMessage = () => {
+    if (statusType === 'completed') {
+      return 'OTP is required for completed status';
+    }
+    if (!hasUserCommentedBefore) {
+      return 'OTP is required for first-time commenters';
+    }
+    return '';
+  };
+
+  return (
+    &lt;>
+      {/* Main Card */}
+      &lt;div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+        {/* Header */}
+        &lt;div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
+          &lt;div className="flex items-center justify-between">
+            &lt;div className="flex items-center gap-3">
+              &lt;div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                &lt;MessageCircle className="w-5 h-5 text-white" />
+              &lt;/div>
+              &lt;div>
+                &lt;h3 className="text-lg font-semibold text-white">Worker Status&lt;/h3>
+                &lt;p className="text-blue-100 text-sm">{visibleItems.length} updates&lt;/p>
+              &lt;/div>
+            &lt;/div>
+            {isResponder &amp;&amp; (
+              &lt;button
+                onClick={() => setIsModalOpen(true)}
+                className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+              >
+                &lt;Plus className="w-4 h-4" />
+                &lt;span className="hidden sm:inline">Add Update&lt;/span>
+              &lt;/button>
+            )}
+          &lt;/div>
+        &lt;/div>
+
+        {/* Content */}
+        &lt;div className="p-6">
+          {visibleItems.length === 0 ? (
+            &lt;div className="text-center py-12">
+              &lt;div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                &lt;MessageCircle className="w-8 h-8 text-gray-400" />
+              &lt;/div>
+              &lt;p className="text-gray-500 mb-4">No worker status updates yet&lt;/p>
+              {isResponder &amp;&amp; (
+                &lt;button
+                  onClick={() => setIsModalOpen(true)}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors"
+                >
+                  Add First Update
+                &lt;/button>
+              )}
+            &lt;/div>
+          ) : (
+            &lt;div className="space-y-4">
+              {visibleItems
+                .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+                .map((item, index) => (
+                  &lt;div
+                    key={item.event_id || `${item.timestamp}-${index}`}
+                    className={`relative ${item.is_reply ? 'ml-8 border-l-4 border-green-200 pl-4' : ''}`}
+                  >
+                    {item.is_reply &amp;&amp; (
+                      &lt;div className="absolute -left-6 top-3 text-green-500">
+                        &lt;Reply className="w-4 h-4" />
+                      &lt;/div>
+                    )}
+
+                    &lt;div className="flex items-start gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                      &lt;div className={`flex-shrink-0 w-10 h-10 ${getStatusColor(item)} rounded-full flex items-center justify-center`}>
+                        {getStatusIcon(item)}
+                      &lt;/div>
+
+                      &lt;div className="flex-1 min-w-0">
+                        &lt;div className="flex items-start justify-between gap-4">
+                          &lt;div className="flex-1">
+                            &lt;p className="text-gray-900 text-sm leading-relaxed break-words">
+                              {item.comment} &lt;span className="text-gray-500 text-xs">– {item.by_institution_id}&lt;/span>
+                            &lt;/p>
+
+                            &lt;div className="flex flex-wrap items-center gap-3 mt-3">
+                              &lt;div className="flex items-center gap-1 text-xs text-gray-500">
+                                &lt;Clock className="w-3 h-3" />
+                                {formatDate(item.timestamp)} -
+                                {item.by_phone ? (
+                                  &lt;PhoneLink phone={item.by_phone} />
+                                ) : (
+                                  &lt;span className="ml-2 text-gray-400 italic">Phone number not available&lt;/span>
+                                )}
+                              &lt;/div>
+
+                              {item.tagged_role_name &amp;&amp; (
+                                &lt;div className="flex items-center gap-1 bg-orange-100 text-orange-700 px-2 py-1 rounded-full text-xs font-medium">
+                                  &lt;Tag className="w-3 h-3" />
+                                  {item.tagged_role_name}
+                                &lt;/div>
+                              )}
+
+                              {item.is_reply &amp;&amp; (
+                                &lt;div className="flex items-center gap-1 bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-medium">
+                                  &lt;Reply className="w-3 h-3" />
+                                  Reply to {item.parent_tag}
+                                &lt;/div>
+                              )}
+                            &lt;/div>
+                          &lt;/div>
+
+                          {/* Actions */}
+                          {item.can_delete &amp;&amp; (
+                            &lt;button
+                              onClick={() => handleDelete(item)}
+                              disabled={deletingId === item.event_id}
+                              className="flex-shrink-0 p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
+                              title="Delete update"
+                            >
+                              &lt;Trash2 className="w-4 h-4" />
+                            &lt;/button>
+                          )}
+                        &lt;/div>
+                      &lt;/div>
+                    &lt;/div>
+                  &lt;/div>
+                ))}
+            &lt;/div>
+          )}
+        &lt;/div>
+      &lt;/div>
+
+      {/* Modal */}
+      {isModalOpen &amp;&amp; (
+        &lt;div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          &lt;div className="bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto">
+            {/* Modal Header */}
+            &lt;div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
+              &lt;div className="flex items-center justify-between">
+                &lt;h3 className="text-lg font-semibold text-white">Add Status Update&lt;/h3>
+                &lt;button
+                  onClick={handleModalClose}
+                  className="text-white/80 hover:text-white p-1 rounded"
+                >
+                  &lt;X className="w-5 h-5" />
+                &lt;/button>
+              &lt;/div>
+            &lt;/div>
+
+            {/* Modal Content */}
+            &lt;div className="p-6 space-y-4">
+              {/* Status Type */}
+              &lt;div>
+                &lt;label className="block text-sm font-medium text-gray-700 mb-2">
+                  Status Type
+                &lt;/label>
+                &lt;select
+                  value={statusType}
+                  onChange={(e) => setStatusType(e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                >
+                  &lt;option value="attended">Attended&lt;/option>
+                  &lt;option value="completed">Completed&lt;/option>
+                  &lt;option value="incomplete">Incomplete&lt;/option>
+                  &lt;option value="tagged">Tag other role&lt;/option>
+                &lt;/select>
+              &lt;/div>
+
+              {/* Tagged Role */}
+              {statusType === 'tagged' &amp;&amp; (
+                &lt;div>
+                  &lt;label className="block text-sm font-medium text-gray-700 mb-2">
+                    Tag Role
+                  &lt;/label>
+                  &lt;select
+                    value={taggedRoleId}
+                    onChange={(e) => setTaggedRoleId(e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    required
+                  >
+                    &lt;option value="">Select role to tag...&lt;/option>
+                    {roles.map((role) => (
+                      &lt;option key={role.id} value={role.id}>
+                        {role.name}
+                      &lt;/option>
+                    ))}
+                  &lt;/select>
+                &lt;/div>
+              )}
+
+              {/* OTP Field */}
+              {needsOtp &amp;&amp; (
+                &lt;div>
+                  &lt;div className="flex items-center gap-2 mb-2">
+                    &lt;label className="block text-sm font-medium text-gray-700">
+                      OTP (6 digits)
+                    &lt;/label>
+                    &lt;Lock className="w-4 h-4 text-orange-500" />
+                  &lt;/div>
+                  &lt;input
+                    type="text"
+                    value={otp}
+                    onChange={(e) => {
+                      const value = e.target.value.slice(0, 6);
+                      setOtp(value);
+                    }}
+                    placeholder="Enter 6-digit OTP"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    maxLength={6}
+                    required
+                  />
+                  {getOtpMessage() &amp;&amp; (
+                    &lt;p className="text-xs text-orange-600 mt-1 flex items-center gap-1">
+                      &lt;Lock className="w-3 h-3" />
+                      {getOtpMessage()}
+                    &lt;/p>
+                  )}
+                &lt;/div>
+              )}
+
+              {/* Comment with Speech Controls */}
+              &lt;div>
+                &lt;div className="flex items-center justify-between mb-2">
+                  &lt;label className="block text-sm font-medium text-gray-700">
+                    Comment
+                  &lt;/label>
+
+                  {/* Speech Controls */}
+                  {speechSupported &amp;&amp; (
+                    &lt;div className="flex items-center gap-2">
+                      &lt;select
+                        value={currentLanguage}
+                        onChange={(e) => changeSpeechLanguage(e.target.value)}
+                        className="text-xs border border-gray-300 rounded px-2 py-1 focus:ring-1 focus:ring-blue-500"
+                        disabled={isListening}
+                      >
+                        &lt;option value="English">English&lt;/option>
+                        &lt;option value="Tamil">தமிழ்&lt;/option>
+                      &lt;/select>
+
+                      &lt;button
+                        type="button"
+                        onClick={isListening ? stopSpeechRecognition : startSpeechRecognition}
+                        className={`p-2 rounded-lg transition-colors ${isListening
+                          ? 'bg-red-100 text-red-600 hover:bg-red-200'
+                          : 'bg-blue-100 text-blue-600 hover:bg-blue-200'
+                          }`}
+                        title={isListening ? 'Stop Recording' : 'Start Voice Input'}
+                      >
+                        {isListening ? &lt;MicOff className="w-4 h-4" /> : &lt;Mic className="w-4 h-4" />}
+                      &lt;/button>
+                    &lt;/div>
+                  )}
+                &lt;/div>
+
+                &lt;textarea
+                  ref={commentInputRef}
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  placeholder="Describe the status update... (You can use voice input)"
+                  rows={3}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                  required
+                />
+
+                {/* Speech Feedback */}
+                {speechFeedback &amp;&amp; (
+                  &lt;div className="mt-2 p-2 bg-blue-50 border border-blue-200 rounded-lg">
+                    &lt;div className="flex items-center gap-2 text-blue-700 text-sm">
+                      {isListening &amp;&amp; &lt;div className="w-2 h-2 bg-red-500 rounded-full animate-pulse">&lt;/div>}
+                      &lt;span>{speechFeedback}&lt;/span>
+                    &lt;/div>
+                  &lt;/div>
+                )}
+              &lt;/div>
+
+              {/* Status Preview */}
+              {comment &amp;&amp; (
+                &lt;div className="bg-gray-50 rounded-lg p-3">
+                  &lt;p className="text-xs text-gray-500 mb-1">Preview:&lt;/p>
+                  &lt;div className="flex items-center gap-2">
+                    &lt;span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusBadge(statusType).color}`}>
+                      {getStatusBadge(statusType).text}
+                    &lt;/span>
+                    &lt;span className="text-sm text-gray-700">{comment}&lt;/span>
+                  &lt;/div>
+                &lt;/div>
+              )}
+              {/* Upload Image Button */}
+               {typeof window !== 'undefined' &amp;&amp; window.ReactToFlutter &amp;&amp; (
+                 &lt;button type="button" onClick={() => {
+                  if (window.ReactToFlutter?.postMessage) {
+                      window.ReactToFlutter.postMessage(JSON.stringify({
+                        action: 'uploadImage',
+                        memoId: memoId
+                      }));
+                  } else {
+                  alert("Image upload not supported in this environment");
+                  }
+
+                  // Optional: close modal after calling Flutter
+                  // setIsModalOpen(false);
+                  }}
+                  className="w-full sm:w-auto px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors">
+                  Upload Image
+                &lt;/button>)}
+              {/* Actions */}
+              &lt;div className="flex gap-3 pt-4">
+                &lt;button
+                  type="button"
+                  onClick={handleModalClose}
+                  className="flex-1 px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                >
+                  Cancel
+                &lt;/button>
+                &lt;button
+                  type="button"
+                  onClick={handleSubmit}
+                  disabled={saving || !comment.trim() || isListening || (needsOtp &amp;&amp; otp.length !== 6)}
+                  className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  {saving ? 'Posting...' : 'Post Update'}
+                &lt;/button>
+              &lt;/div>
+            &lt;/div>
+          &lt;/div>
+        &lt;/div>
+      )}
+    &lt;/>
+  );
+};
+
+export default WorkerStatus;</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

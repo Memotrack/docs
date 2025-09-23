@@ -1,0 +1,594 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> services/api.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ApiService.html">ApiService</a></li></ul><h3>Global</h3><ul><li><a href="global.html#API_ENDPOINTS">API_ENDPOINTS</a></li><li><a href="global.html#ApproverHierarchyForm">ApproverHierarchyForm</a></li><li><a href="global.html#BackButton">BackButton</a></li><li><a href="global.html#BlockForm">BlockForm</a></li><li><a href="global.html#Checkbox">Checkbox</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#DashboardIframe">DashboardIframe</a></li><li><a href="global.html#FlutterAwareWrapper">FlutterAwareWrapper</a></li><li><a href="global.html#FlutterContext">FlutterContext</a></li><li><a href="global.html#FlutterProvider">FlutterProvider</a></li><li><a href="global.html#FormField">FormField</a></li><li><a href="global.html#MemoDetail">MemoDetail</a></li><li><a href="global.html#MemoEditForm">MemoEditForm</a></li><li><a href="global.html#MemoExplorer">MemoExplorer</a></li><li><a href="global.html#MemoForm">MemoForm</a></li><li><a href="global.html#MemoTabbedList">MemoTabbedList</a></li><li><a href="global.html#MemosPage">MemosPage</a></li><li><a href="global.html#Modal">Modal</a></li><li><a href="global.html#RoleForm">RoleForm</a></li><li><a href="global.html#SetPassword">SetPassword</a></li><li><a href="global.html#Setting">Setting</a></li><li><a href="global.html#ShiftForm">ShiftForm</a></li><li><a href="global.html#USER_ROLES">USER_ROLES</a></li><li><a href="global.html#UserForm">UserForm</a></li><li><a href="global.html#WardSelectDialog">WardSelectDialog</a></li><li><a href="global.html#WorkerStatus">WorkerStatus</a></li><li><a href="global.html#emptyLevel">emptyLevel</a></li><li><a href="global.html#errors">errors</a></li><li><a href="global.html#fieldMap">fieldMap</a></li><li><a href="global.html#getOrGenerateFcmToken">getOrGenerateFcmToken</a></li><li><a href="global.html#handleBlur">handleBlur</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#isOpen">isOpen</a></li><li><a href="global.html#method">method</a></li><li><a href="global.html#onClose">onClose</a></li><li><a href="global.html#onConfirm">onConfirm</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#touched">touched</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useFlutter">useFlutter</a></li><li><a href="global.html#useForm">useForm</a></li><li><a href="global.html#validate">validate</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>services/api.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// import {getOrGenerateFcmToken} from "../notification/firebase";
+
+/**
+ * ApiService class for making API requests to the backend.
+ * Handles authentication tokens and provides methods for various endpoints.
+ */
+class ApiService {
+  constructor() {
+    // this.baseURL = 'http://localhost:8000/';
+    // this.baseURL = 'https://c8lwf80x-8000.inc1.devtunnels.ms/';
+    // this.baseURL = 'https://memotrack.pythonanywhere.com/';
+    // this.baseURL = 'https://mtbackend.pythonanywhere.com/'
+    this.baseURL = process.env.BACKEND_URL || 'https://app.memotrack.net/';
+  }
+
+  /**
+ * General request method to interact with the API.
+ * Automatically adds Authorization header if a token exists in localStorage.
+ *
+ * @param {string} endpoint - The API endpoint path.
+ * @param {object} [options={}] - Fetch API options (method, headers, body, etc.).
+ * @returns {Promise&lt;object|null>} - The parsed JSON response or null for 204 No Content.
+ * @throws {Error} - If the HTTP response status is not OK or if the fetch fails.
+ */
+  async request(endpoint, options = {}) {
+    const url = `${this.baseURL}${endpoint}`;
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+      ...options,
+    };
+
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      config.headers.Authorization = `Token ${token}`;
+    }
+
+    try {
+      const response = await fetch(url, config);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      if (response.status === 204) {
+        return null;
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('API request failed:', error);
+      throw error;
+    }
+  }
+
+  /**
+ * Authenticates a user and retrieves an authentication token.
+ *
+ * @param {string} phoneNumber - The user's phone number.
+ * @param {string} password - The user's password.
+ * @param {string|null} [fcmToken=null] - The FCM token for push notifications.
+ * @returns {Promise&lt;object>} - The authentication data, including the token.
+ */
+  async login(phoneNumber, password, fcmToken=null) {
+    try {
+      // const fcmToken = await getOrGenerateFcmToken();
+
+      const body = {
+        phone: phoneNumber,
+        password: password
+      };
+
+      if(fcmToken){
+        body['fcm_token'] = fcmToken;
+      }
+
+      console.log("Sending login request with body:", body);
+
+      const data = await this.request("/api/token-auth/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      console.log("Backend response:", data);
+      return data;
+    } catch (error) {
+      console.error("Login failed:", error);
+      throw error;
+    }
+  }
+
+  /**
+ * Logs out the current user.
+ *
+ * @returns {Promise&lt;null>} - A promise that resolves when the logout request is successful.
+ */
+  async logout() {
+    return this.request('/api/token-auth/logout/', {
+      method: 'POST',
+    });
+  }
+
+  async setPassword(phoneNumber, newPassword) {
+    /**
+ * Sets or resets the password for a given phone number.
+ *
+ * @param {string} phoneNumber - The user's phone number.
+ * @param {string} newPassword - The new password to set.
+ */
+    return this.request('/api/set-password/', {
+      method: 'POST',
+      body: JSON.stringify({
+        phone: phoneNumber,
+        password: newPassword,
+      })
+    });
+  }
+  /**
+ * Retrieves details for a specific hospital by its ID.
+ * Typically called after a user logs in to get details about their assigned hospital.
+ *
+ * @param {string|number} hospitalId - The ID of the hospital.
+ * @returns {Promise&lt;object>} - The hospital details.
+ */
+  async getHospital(hospitalId) {
+    return this.request(`/api/hospitals/${hospitalId}/`);
+  }
+
+  // Hospital-specific endpoints
+  /**
+ * Retrieves the list of users belonging to a specific hospital.
+ *
+ * @param {string|number} hospitalId - The ID of the hospital.
+ * @returns {Promise&lt;object[]>} - An array of user objects.
+ */
+  async getUsers(hospitalId) {
+    return this.request(`/api/hospitals/${hospitalId}/users/`);
+  }
+  /**
+ * Creates a new user within a specific hospital.
+ */
+
+  async createUser(hospitalId, userData) {
+    return this.request(`/api/hospitals/${hospitalId}/users/`, {
+      method: 'POST',
+      body: JSON.stringify(userData),
+    });
+  }
+
+  /**
+ * Updates an existing user's details within a specific hospital.
+ */
+  async updateUser(hospitalId, userId, userData) {
+    return this.request(`/api/hospitals/${hospitalId}/users/${userId}/`, {
+      method: 'PATCH',
+      body: JSON.stringify(userData),
+    });
+  }
+
+  /**
+ * Deletes a user from a specific hospital.
+ */
+  async deleteUser(hospitalId, userId) {
+    return this.request(`/api/hospitals/${hospitalId}/users/${userId}/`, {
+      method: 'DELETE',
+    });
+  }
+
+  async getRoles(hospitalId) {
+    return await this.request(`/api/hospitals/${hospitalId}/roles/`);
+  }
+  
+
+  /**
+ * Creates a new role within a specific hospital.
+ */
+  async createRole(hospitalId, roleData) {
+    return this.request(`/api/hospitals/${hospitalId}/roles/`, {
+      method: 'POST',
+      body: JSON.stringify(roleData),
+    });
+  }
+  
+  async updateRole(hospitalId, roleId, roleData) {
+    /**
+ * Updates an existing role's details within a specific hospital.
+ */
+    return this.request(`/api/hospitals/${hospitalId}/roles/${roleId}/`, {
+      method: 'PATCH',
+      body: JSON.stringify(roleData),
+    });
+  }
+
+  async deleteRole(hospitalId, roleId) {
+    /**
+ * Deletes a role from a specific hospital.
+ */
+    return this.request(`/api/hospitals/${hospitalId}/roles/${roleId}/`, {
+      method: 'DELETE',
+    });
+  }
+
+  async getBlocks(hospitalId) {
+    return this.request(`/api/hospitals/${hospitalId}/blocks/`);
+  }
+  async getBlock(hospitalId, blockId) {
+    return this.request(`/api/hospitals/${hospitalId}/blocks/${blockId}/`);
+  }
+  /**
+ * Retrieves the list of blocks within a specific hospital.
+ */
+
+  async createBlock(hospitalId, blockData) {
+    return this.request(`/api/hospitals/${hospitalId}/blocks/`, {
+      method: 'POST',
+      body: JSON.stringify(blockData),
+    });
+  }
+
+  /**
+ * Updates an existing block's details within a specific hospital.
+ */
+  async updateBlock(hospitalId, blockId, blockData) {
+    return this.request(`/api/hospitals/${hospitalId}/blocks/${blockId}/`, {
+      method: 'PATCH',
+      body: JSON.stringify(blockData),
+    });
+  }
+
+  async deleteBlock(hospitalId, blockId) {
+    /**
+ * Deletes a block from a specific hospital.
+ */
+    return this.request(`/api/hospitals/${hospitalId}/blocks/${blockId}/`, {
+      method: 'DELETE',
+    });
+  }
+
+  async getShifts(hospitalId) {
+    return this.request(`/api/hospitals/${hospitalId}/shifts/`);
+  }
+
+  /**
+ * Creates a new shift within a specific hospital.
+ */
+  async createShift(hospitalId, shiftData) {
+    return this.request(`/api/hospitals/${hospitalId}/shifts/`, {
+      method: 'POST',
+      body: JSON.stringify(shiftData),
+    });
+  }
+
+  async updateShift(hospitalId, shiftId, shiftData) {
+    /**
+ * Updates an existing shift's details within a specific hospital.
+ */
+    return this.request(`/api/hospitals/${hospitalId}/shifts/${shiftId}/`, {
+      method: 'PATCH',
+      body: JSON.stringify(shiftData),
+    });
+  }
+
+  async deleteShift(hospitalId, shiftId) {
+    /**
+ * Deletes a shift from a specific hospital.
+ */
+    return this.request(`/api/hospitals/${hospitalId}/shifts/${shiftId}/`, {
+      method: 'DELETE',
+    });
+  }
+
+  // ================= Approver Hierarchies =================
+  async getApproverHierarchies(hospitalId) {
+    /**
+ * Retrieves the list of approver hierarchies for a specific hospital.
+ */
+    return this.request(`/api/hospitals/${hospitalId}/hierarchies/`);
+  }
+
+  async createApproverHierarchy(hospitalId, data) {
+    /**
+ * Creates a new approver hierarchy for a specific hospital.
+ */
+    return this.request(`/api/hospitals/${hospitalId}/hierarchies/`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async updateApproverHierarchy(hospitalId, id, data) {
+    /**
+ * Updates an existing approver hierarchy for a specific hospital.
+ */
+    return this.request(`/api/hospitals/${hospitalId}/hierarchies/${id}/`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async deleteApproverHierarchy(hospitalId, id) {
+    /**
+ * Deletes an approver hierarchy from a specific hospital.
+ */
+    return this.request(`/api/hospitals/${hospitalId}/hierarchies/${id}/`, {
+      method: 'DELETE',
+    });
+  }
+
+  // ================= Memo =================
+  async createMemo(hospitalId, memoData) {
+    /**
+ * Creates a new memo for a specific hospital.
+ */
+    return this.request(`/api/${hospitalId}/create-memo/`, {
+      method: 'POST',
+      body: JSON.stringify(memoData),
+    });
+  }
+
+  async updateMemo(hospitalId, memoId, memoData) {
+    console.log(memoData);
+    /**
+ * Updates an existing memo for a specific hospital.
+ */
+    return this.request(`/api/${hospitalId}/memos/${memoId}/`, {
+      method: 'PATCH',
+      body: JSON.stringify(memoData),
+    });
+  }
+
+  async getMemo(hospitalId, memoId) {
+    /**
+ * Retrieves details of a specific memo for a given hospital.
+ */
+    return this.request(`/api/${hospitalId}/memos/${memoId}/`);
+  }
+
+  async getUserMemos(hospitalId) {
+    /**
+ * Retrieves all memos associated with the current user for a specific hospital.
+ */
+    return this.request(`/api/${hospitalId}/memos/`);
+  }
+
+  async approveMemo(hospitalId, memoId, data) {
+    return this.request(`/api/${hospitalId}/memos/${memoId}/approve/`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  /**
+ * Rejects a memo for a specific hospital.
+ */
+  async rejectMemo(hospitalId, memoId, data) {
+    return this.request(`/api/${hospitalId}/memos/${memoId}/reject/`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  // =============== Worker Status =================
+  async addWorkerStatus(hospitalId, memoId, data) {
+    /**
+ * Adds a work status event to a specific memo.
+ */
+    return this.request(`/api/${hospitalId}/memos/${memoId}/work-status/`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async deleteWorkerStatus(hospitalId, memoId, eventId, metadata = {}) {
+    /**
+ * Deletes a specific work status event from a memo.
+ */
+    return this.request(`/api/${hospitalId}/memos/${memoId}/work-status/`, {
+      method: 'DELETE',
+      body: JSON.stringify({
+        event_type: 'worker_status_delete',
+        payload: { event_id: eventId },
+        metadata,
+      }),
+    });
+  }
+
+  
+  async getWards(hospitalId) {
+    return this.request(`/api/hospitals/${hospitalId}/wards/`);
+    /**
+ * Retrieves the list of all wards within a specific hospital.
+ */
+  }
+
+  async getWardsByBlock(hospitalId,blockId) {
+    return this.request(`/api/hospitals/${hospitalId}/wards/?block=${blockId}`);
+    /**
+ * Retrieves the list of wards for a specific block within a hospital.
+ */
+  }
+
+  async switchWard(wardId) {
+    return this.request('/api/switch-ward/', {
+      method: 'POST',
+      body: JSON.stringify({ ward_id: wardId }),  
+    });
+  }
+
+  async refreshUser() {
+    /**
+ * Refreshes the current user's details and permissions.
+ */
+    return this.request('/api/refresh-user/', {
+      method: 'POST',
+    });
+  }
+
+  async createWard(hospitalId, wardData) {
+    return this.request(`/api/hospitals/${hospitalId}/wards/`, {
+      method: 'POST',
+      body: JSON.stringify(wardData),
+    });
+  }
+  /**
+ * Creates a new ward within a specific hospital.
+ */
+
+  async updateWard(hospitalId, wardId, wardData) {
+    return this.request(`/api/hospitals/${hospitalId}/wards/${wardId}/`, {
+      method: 'PATCH',
+      body: JSON.stringify(wardData),
+    });
+  }
+
+  /**
+ * Updates an existing ward's details within a specific hospital.
+ */
+  async deleteWard(hospitalId, wardId) {
+    return this.request(`/api/hospitals/${hospitalId}/wards/${wardId}/`, {
+      method: 'DELETE',
+    });
+  }
+
+  async restoreWard(hospitalId, wardId) {
+    return this.request(`/api/hospitals/${hospitalId}/wards/${wardId}/restore/`, {
+      /**
+ * Restores a soft-deleted ward within a specific hospital.
+ */
+      method: 'POST',
+    });
+  }
+
+  // helpers for otp verifications
+
+  async refreshOTP(hospitalId,memoId){
+    return this.request(`/api/${hospitalId}/memos/${memoId}/refresh-otp/`,{
+      method:'POST',
+    });
+  }
+
+  /**
+ * Retrieves memos for the dashboard view, optionally filtered by query parameters.
+ */
+  async getDashboardMemos(hospitalId,queryParams = ''){
+    return this.request( `/api/${hospitalId}/dashboard-memos/?${queryParams}`,{
+      method:'GET'
+    });
+  }
+
+}
+
+
+export default ApiService;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

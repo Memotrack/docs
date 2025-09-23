@@ -1,0 +1,197 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> contexts/FlutterContext.jsx</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ApiService.html">ApiService</a></li></ul><h3>Global</h3><ul><li><a href="global.html#API_ENDPOINTS">API_ENDPOINTS</a></li><li><a href="global.html#ApproverHierarchyForm">ApproverHierarchyForm</a></li><li><a href="global.html#BackButton">BackButton</a></li><li><a href="global.html#BlockForm">BlockForm</a></li><li><a href="global.html#Checkbox">Checkbox</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#DashboardIframe">DashboardIframe</a></li><li><a href="global.html#FlutterAwareWrapper">FlutterAwareWrapper</a></li><li><a href="global.html#FlutterContext">FlutterContext</a></li><li><a href="global.html#FlutterProvider">FlutterProvider</a></li><li><a href="global.html#FormField">FormField</a></li><li><a href="global.html#MemoDetail">MemoDetail</a></li><li><a href="global.html#MemoEditForm">MemoEditForm</a></li><li><a href="global.html#MemoExplorer">MemoExplorer</a></li><li><a href="global.html#MemoForm">MemoForm</a></li><li><a href="global.html#MemoTabbedList">MemoTabbedList</a></li><li><a href="global.html#MemosPage">MemosPage</a></li><li><a href="global.html#Modal">Modal</a></li><li><a href="global.html#RoleForm">RoleForm</a></li><li><a href="global.html#SetPassword">SetPassword</a></li><li><a href="global.html#Setting">Setting</a></li><li><a href="global.html#ShiftForm">ShiftForm</a></li><li><a href="global.html#USER_ROLES">USER_ROLES</a></li><li><a href="global.html#UserForm">UserForm</a></li><li><a href="global.html#WardSelectDialog">WardSelectDialog</a></li><li><a href="global.html#WorkerStatus">WorkerStatus</a></li><li><a href="global.html#emptyLevel">emptyLevel</a></li><li><a href="global.html#errors">errors</a></li><li><a href="global.html#fieldMap">fieldMap</a></li><li><a href="global.html#getOrGenerateFcmToken">getOrGenerateFcmToken</a></li><li><a href="global.html#handleBlur">handleBlur</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#isOpen">isOpen</a></li><li><a href="global.html#method">method</a></li><li><a href="global.html#onClose">onClose</a></li><li><a href="global.html#onConfirm">onConfirm</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#touched">touched</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useFlutter">useFlutter</a></li><li><a href="global.html#useForm">useForm</a></li><li><a href="global.html#validate">validate</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>contexts/FlutterContext.jsx</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// Create FlutterContext.jsx
+import React, { createContext, useContext } from 'react';
+import toast from 'react-hot-toast';
+
+/**
+ * Context for interacting with the Flutter environment.
+ * Provides functions to send data and messages to the Flutter app.
+ */
+const FlutterContext = createContext();
+
+/**
+ * Custom hook to access the Flutter context.
+ * Throws an error if used outside of a FlutterProvider.
+ * @returns The Flutter context value.
+ */
+export const useFlutter = () => {
+  const context = useContext(FlutterContext);
+  if (!context) {
+    throw new Error('useFlutter must be used within FlutterProvider');
+  }
+  return context;
+};
+
+/**
+ * Provider component for the Flutter context.
+ * Wraps the application to make Flutter interaction functions available.
+ * @param {Object} props - The component props.
+ * @param {React.ReactNode} props.children - The child components.
+ * @returns The FlutterProvider component.
+ */
+export const FlutterProvider = ({ children }) => {
+  /**
+   * Sends a message to the Flutter application.
+   * @param {string} action - The action to be performed in Flutter.
+   * @param {object} [data] - Optional data to send with the action.
+   */
+  const sendToFlutter = (action, data) => {
+    try {
+      if (window.ReactToFlutter) {
+        const message = { action: action, ...data };
+        window.ReactToFlutter.postMessage(JSON.stringify(message));
+        console.log('📤 Sent to Flutter:', action);
+      } else {
+        toast.error('ReactToFlutter channel not available');
+        console.warn('ReactToFlutter channel not available');
+      }
+    } catch (error) {
+      console.error('Error sending to Flutter:', error);
+    }
+  };
+
+  /**
+   * Updates the user data stored in the Flutter application.
+   * Retrieves user data from local storage and sends it to Flutter.
+   */
+  const updateUserInFlutter = () => {
+      const userData = JSON.parse(localStorage.getItem('user'));
+      sendToFlutter('updateUser', { userData });
+      toast.success('User updated in Flutter');
+
+  };
+
+  /**
+   * Displays a message within the Flutter application.
+   * @param {string} message - The message to display.
+   */
+
+  const showFlutterMessage = (message) => {
+    sendToFlutter('showMessage', { message });
+  };
+
+  return (
+    &lt;FlutterContext.Provider value={{
+      sendToFlutter,
+      updateUserInFlutter,
+      showFlutterMessage
+    }}>
+      {children}
+    &lt;/FlutterContext.Provider>
+  );
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

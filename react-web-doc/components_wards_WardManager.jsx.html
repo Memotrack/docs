@@ -1,0 +1,327 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/wards/WardManager.jsx</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ApiService.html">ApiService</a></li></ul><h3>Global</h3><ul><li><a href="global.html#API_ENDPOINTS">API_ENDPOINTS</a></li><li><a href="global.html#ApproverHierarchyForm">ApproverHierarchyForm</a></li><li><a href="global.html#BackButton">BackButton</a></li><li><a href="global.html#BlockForm">BlockForm</a></li><li><a href="global.html#Checkbox">Checkbox</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#DashboardIframe">DashboardIframe</a></li><li><a href="global.html#FlutterAwareWrapper">FlutterAwareWrapper</a></li><li><a href="global.html#FlutterContext">FlutterContext</a></li><li><a href="global.html#FlutterProvider">FlutterProvider</a></li><li><a href="global.html#FormField">FormField</a></li><li><a href="global.html#MemoDetail">MemoDetail</a></li><li><a href="global.html#MemoEditForm">MemoEditForm</a></li><li><a href="global.html#MemoExplorer">MemoExplorer</a></li><li><a href="global.html#MemoForm">MemoForm</a></li><li><a href="global.html#MemoTabbedList">MemoTabbedList</a></li><li><a href="global.html#MemosPage">MemosPage</a></li><li><a href="global.html#Modal">Modal</a></li><li><a href="global.html#RoleForm">RoleForm</a></li><li><a href="global.html#SetPassword">SetPassword</a></li><li><a href="global.html#Setting">Setting</a></li><li><a href="global.html#ShiftForm">ShiftForm</a></li><li><a href="global.html#USER_ROLES">USER_ROLES</a></li><li><a href="global.html#UserForm">UserForm</a></li><li><a href="global.html#WardSelectDialog">WardSelectDialog</a></li><li><a href="global.html#WorkerStatus">WorkerStatus</a></li><li><a href="global.html#emptyLevel">emptyLevel</a></li><li><a href="global.html#errors">errors</a></li><li><a href="global.html#fieldMap">fieldMap</a></li><li><a href="global.html#getOrGenerateFcmToken">getOrGenerateFcmToken</a></li><li><a href="global.html#handleBlur">handleBlur</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#isOpen">isOpen</a></li><li><a href="global.html#method">method</a></li><li><a href="global.html#onClose">onClose</a></li><li><a href="global.html#onConfirm">onConfirm</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#touched">touched</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useFlutter">useFlutter</a></li><li><a href="global.html#useForm">useForm</a></li><li><a href="global.html#validate">validate</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/wards/WardManager.jsx</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * WardManager component for managing wards within a specific hospital block.
+ * Allows viewing, adding, deleting, and searching wards.
+ * Wards are grouped and displayed by floor, with collapsible sections.
+ */
+
+import React, { useEffect, useState } from 'react';
+// useParams hook to access route parameters (blockId)
+// useNavigate hook for programmatic navigation
+// useAuth hook to access authentication context (apiService, hospital)
+import { useParams, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
+import LoadingSpinner from '../common/LoadingSpinner';
+import toast from 'react-hot-toast';
+
+const WardManager = () => {
+  const { blockId } = useParams();
+  const { apiService, hospital } = useAuth();
+  const navigate = useNavigate();
+
+  // State for storing the current block details
+  const [block, setBlock] = useState(null);
+  // State for storing the list of wards in the block
+  const [wards, setWards] = useState([]);
+  // State for the new ward floor input
+  const [floor, setFloor] = useState('');
+  // State for the new ward name input
+  const [name, setName] = useState('');
+  // State for the search input
+  const [search, setSearch] = useState('');
+  // State for loading indicator
+  const [loading, setLoading] = useState(true);
+  // State for error messages
+  const [error, setError] = useState('');
+  // State to manage expanded/collapsed state of floor sections
+  const [expanded, setExpanded] = useState({});
+
+  /**
+ * Effect hook to fetch block and ward data when the component mounts
+ * or blockId, hospital.id, or apiService changes.
+ */
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        // Fetch block details
+        const b = await apiService.getBlock(hospital.id, blockId);
+        // Fetch wards belonging to the block
+        const w = await apiService.getWardsByBlock(hospital.id, blockId);
+        setBlock(b);
+        // Sort wards by floor number initially
+        setWards(w);
+        setLoading(false);
+      } catch (err) {
+        setError('Failed to load wards or block');
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [blockId, hospital.id, apiService]);
+
+  /**
+ * Handles adding a new ward.
+ * Validates the floor number against the block's total floors.
+ * Calls the API to create the ward and updates the state.
+ */
+  const handleAddWard = async () => {
+    const floorNum = parseInt(floor);
+    // Validate floor number
+    if (floorNum &lt; 1 || floorNum > block.no_of_floors) {
+      return;
+    }
+    try {
+      const newWard = await apiService.createWard(hospital.id, { ward_name:name, floor: floorNum, block: blockId });
+      setWards(prev => [...prev, newWard]);
+      setName('');
+      setFloor('');
+      setError('');
+      toast.success('Ward added successfully!');
+    } catch (err) {
+      toast.error(err.message || 'Failed to add ward');
+    }
+  };
+
+  /**
+ * Handles deleting a ward by its ID.
+ * Calls the API to delete the ward and updates the state.
+ */
+  const handleDelete = async (id) => {
+    try {
+      await apiService.deleteWard(hospital.id, id);
+      setWards(prev => prev.filter(w => w.id !== id));
+      toast.success('Ward deleted successfully!');
+    } catch(err) {
+      toast.error(err.message || 'Failed to delete ward');
+    }
+  };
+
+  const toggleFloor = (floorNum) => {
+    setExpanded(prev => ({ ...prev, [floorNum]: !prev[floorNum] }));
+  };
+
+  /**
+ * Groups wards by their floor number.
+ * Filters wards based on the search query before grouping.
+ * @returns {object} An object where keys are floor numbers and values are arrays of ward objects.
+ */
+  const groupedWards = () => {
+    const filtered = search
+      ? wards.filter(w => w.ward_name.toLowerCase().includes(search.toLowerCase()))
+      : wards;
+
+    return filtered.reduce((acc, ward) => {
+      acc[ward.floor] = acc[ward.floor] || [];
+      acc[ward.floor].push(ward);
+      return acc;
+    }, {});
+  };
+
+  // Display loading spinner while fetching data
+  if (loading) return &lt;LoadingSpinner />;
+
+  return (
+    &lt;div className="max-w-4xl mx-auto p-4 space-y-6">
+      &lt;div className="flex justify-between items-center">
+        &lt;h2 className="text-2xl font-bold">Wards in {block?.name}&lt;/h2>
+        &lt;button onClick={() => navigate(-1)} className="text-gray-500 hover:underline">
+          ← Back
+        &lt;/button>
+      &lt;/div>
+
+      {/* Add Ward Inputs */}
+      &lt;div className="flex flex-col md:flex-row gap-2">
+        &lt;input
+          type="text"
+          placeholder="Ward Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="border border-gray-300 px-3 py-2 rounded w-full md:w-1/3"
+        />
+        &lt;input
+          type="number"
+          placeholder="Floor"
+          value={floor}
+          onChange={(e) => setFloor(e.target.value)}
+          className="border border-gray-300 px-3 py-2 rounded w-full md:w-1/6"
+        />
+        {/* Add Ward Button */}
+        &lt;button
+          onClick={handleAddWard}
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full md:w-auto"
+        >
+          Add Ward
+        &lt;/button>
+      &lt;/div>
+
+      {/* Search Box */}
+      &lt;input
+        type="text"
+        placeholder="Search ward by name..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="w-full px-3 py-2 border border-gray-300 rounded"
+      />
+
+      {error &amp;&amp; &lt;p className="text-red-600">{error}&lt;/p>}
+
+
+      {/* Wards Grouped by Floor */}
+      {Object.entries(groupedWards())
+        .sort(([a], [b]) => parseInt(a) - parseInt(b))
+        .map(([floorNum, wardList]) => (
+          &lt;div key={floorNum} className="border rounded shadow-sm bg-white">
+            &lt;button
+              onClick={() => toggleFloor(floorNum)}
+              className="w-full flex justify-between items-center px-4 py-3 bg-gray-100 text-left font-medium hover:bg-gray-200"
+            >
+              {/* Floor header with ward count and expand/collapse icon */}
+              &lt;span>Floor {floorNum} ({wardList.length} ward{wardList.length !== 1 ? 's' : ''})&lt;/span>
+              &lt;span>{expanded[floorNum] ? '▴' : '▾'}&lt;/span>
+            &lt;/button>
+            {expanded[floorNum] &amp;&amp; (
+              &lt;ul className="px-4 py-2 space-y-2">
+                {wardList.map(ward => (
+                  &lt;li key={ward.id} className="flex justify-between items-center border-b py-2">
+                    {/* Ward name and Delete button */}
+                    &lt;span>{ward.ward_name}&lt;/span>
+                    &lt;button
+                      onClick={() => handleDelete(ward.id)}
+                      className="text-red-600 text-sm hover:underline"
+                    >
+                      Delete
+                    &lt;/button>
+                  &lt;/li>
+                ))}
+              &lt;/ul>
+            )}
+          &lt;/div>
+        ))}
+
+      {/* Message when no wards are found (after search or initially empty) */}
+      {Object.keys(groupedWards()).length === 0 &amp;&amp; (
+        &lt;div className="text-gray-500 text-center">No wards found.&lt;/div>
+      )}
+    &lt;/div>
+  );
+};
+
+export default WardManager;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

@@ -1,0 +1,394 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/memos/MemoForm.jsx</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ApiService.html">ApiService</a></li></ul><h3>Global</h3><ul><li><a href="global.html#API_ENDPOINTS">API_ENDPOINTS</a></li><li><a href="global.html#ApproverHierarchyForm">ApproverHierarchyForm</a></li><li><a href="global.html#BackButton">BackButton</a></li><li><a href="global.html#BlockForm">BlockForm</a></li><li><a href="global.html#Checkbox">Checkbox</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#DashboardIframe">DashboardIframe</a></li><li><a href="global.html#FlutterAwareWrapper">FlutterAwareWrapper</a></li><li><a href="global.html#FlutterContext">FlutterContext</a></li><li><a href="global.html#FlutterProvider">FlutterProvider</a></li><li><a href="global.html#FormField">FormField</a></li><li><a href="global.html#MemoDetail">MemoDetail</a></li><li><a href="global.html#MemoEditForm">MemoEditForm</a></li><li><a href="global.html#MemoExplorer">MemoExplorer</a></li><li><a href="global.html#MemoForm">MemoForm</a></li><li><a href="global.html#MemoTabbedList">MemoTabbedList</a></li><li><a href="global.html#MemosPage">MemosPage</a></li><li><a href="global.html#Modal">Modal</a></li><li><a href="global.html#RoleForm">RoleForm</a></li><li><a href="global.html#SetPassword">SetPassword</a></li><li><a href="global.html#Setting">Setting</a></li><li><a href="global.html#ShiftForm">ShiftForm</a></li><li><a href="global.html#USER_ROLES">USER_ROLES</a></li><li><a href="global.html#UserForm">UserForm</a></li><li><a href="global.html#WardSelectDialog">WardSelectDialog</a></li><li><a href="global.html#WorkerStatus">WorkerStatus</a></li><li><a href="global.html#emptyLevel">emptyLevel</a></li><li><a href="global.html#errors">errors</a></li><li><a href="global.html#fieldMap">fieldMap</a></li><li><a href="global.html#getOrGenerateFcmToken">getOrGenerateFcmToken</a></li><li><a href="global.html#handleBlur">handleBlur</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#isOpen">isOpen</a></li><li><a href="global.html#method">method</a></li><li><a href="global.html#onClose">onClose</a></li><li><a href="global.html#onConfirm">onConfirm</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#touched">touched</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useFlutter">useFlutter</a></li><li><a href="global.html#useForm">useForm</a></li><li><a href="global.html#validate">validate</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/memos/MemoForm.jsx</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState, useMemo } from 'react';
+import toast from 'react-hot-toast';
+import { useFlutter } from '../../contexts/FlutterContext';
+import { useAuth } from '../../hooks/useAuth';
+import WardSelectDialog from '../common/WardSelectDialog';
+import Modal from '../ui/Modal';
+
+/**
+ * MemoForm component for creating a new memo.
+ *
+ * @param {Object} props - The component props.
+ * @param {function} props.onSuccess - Callback function to be executed on successful memo creation.
+ * @param {function} props.onCancel - Callback function to be executed when the form creation is canceled.
+ */
+const MemoForm = ({ onSuccess, onCancel }) => {
+  const { apiService, hospital, user, updateAuth } = useAuth();
+  const { updateUserInFlutter } = useFlutter();
+  const hospitalId = hospital?.id || localStorage.getItem('hospitalId');
+
+  const [roles, setRoles] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [createdMemoUuid, setCreatedMemoUuid] = useState(null);
+
+  const [showWardConfirm, setShowWardConfirm] = useState(true);
+  const [showWardSelect, setShowWardSelect] = useState(false);
+  const [formData, setFormData] = useState({
+    complaint: '',
+    department: '',
+    tagged_role_id: '',
+    ward_id: user?.current_ward_id || '',
+  });
+
+  /**
+   * Generates a unique UUID for the memo using `crypto.randomUUID`.
+   * This UUID is generated only once when the component mounts.
+   *
+   * @type {string}
+   */
+  const memoUuid = useMemo(() => crypto.randomUUID(), []);
+
+  useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        const data = await apiService.getRoles(hospitalId);
+        const filtered = (data || []).filter(
+          (r) => r?.name?.toLowerCase() !== 'admin' &amp;&amp; r?.is_responder
+        );
+        setRoles(filtered);
+      } catch (err) {
+        console.error(err);
+        toast.error('Failed to fetch roles');
+      }
+    };
+
+    fetchRoles();
+  }, [apiService, hospitalId]);
+
+  /**
+   * Handles changes to the form input fields.
+   * Updates the `formData` state with the new value.
+   *
+   * @param {object} e - The change event object.
+   */
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  /**
+   * Handles the form submission.
+   * Validates the form, creates the memo via the API, and handles success/failure.
+   */
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const { complaint, department, tagged_role_id } = formData;
+    if (!complaint || !department || !tagged_role_id) {
+      toast.error('Please fill all fields');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const taggedRole = roles.find((r) => r.id === parseInt(tagged_role_id));
+      await apiService.createMemo(hospitalId, {
+        uuid: memoUuid,
+        payload: {
+          ...formData,
+          tagged_role_name: taggedRole?.name || '',
+        },
+        metadata: JSON.parse(localStorage.getItem('user')) || {},
+      });
+
+      toast.success('Memo created');
+      setCreatedMemoUuid(memoUuid); // Show the created memo title
+      onSuccess(memoUuid);
+    } catch (err) {
+      console.error(err);
+      toast.error('Failed to create memo');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /**
+   * Handles the ward change from the WardSelectDialog.
+   * Switches the user's current ward via the API and updates authentication state.
+   *
+   * @param {object} ward - The selected ward object.
+   */
+  const handleWardChange = async (ward) => {
+    try {
+      setLoading(true);
+      await apiService.switchWard(ward.id);
+      const data = await apiService.refreshUser();
+      updateAuth(data.user, data.hospital, data.token);
+      updateUserInFlutter();
+
+      toast.success('Ward switched');
+      setShowWardConfirm(false);
+      setShowWardSelect(false);
+    } catch (err) {
+      console.error(err);
+      toast.error('Failed to switch ward');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    &lt;>
+      {showWardConfirm &amp;&amp; (
+        &lt;Modal
+          isOpen={true}
+          onClose={() => {
+            setShowWardConfirm(false);
+            onCancel();
+          }}
+          title="Confirm Ward"
+          size="sm"
+          className="z-50"
+        >
+          {/* Replace blur with darkened overlay */}
+          &lt;div className="fixed inset-0 bg-black/60 z-40" />
+
+          &lt;div className="fixed inset-0 z-50 flex items-center justify-center">
+            &lt;div className="bg-white rounded-xl border border-gray-300 shadow-2xl p-6 max-w-sm w-full mx-4 brightness-110">
+              &lt;div className="space-y-4 text-sm text-gray-700">
+                {user?.current_ward_id ? (
+                  &lt;>
+                    &lt;p>You are currently in:&lt;/p>
+                    &lt;div className="space-y-1 pl-2">
+                      &lt;p>&lt;strong>Ward:&lt;/strong> {user?.current_ward_name || 'N/A'}&lt;/p>
+                      &lt;p>&lt;strong>Floor:&lt;/strong> {user?.floor || 'N/A'}&lt;/p>
+                      &lt;p>&lt;strong>Block:&lt;/strong> {user?.current_block_name || 'N/A'}&lt;/p>
+                    &lt;/div>
+                    &lt;p className="pt-2">
+                      The memo will be created for the above ward. Do you want to proceed?
+                    &lt;/p>
+                  &lt;/>
+                ) : (
+                  &lt;p>You are not currently in a ward. Please select a ward for this memo.&lt;/p>
+                )}
+                &lt;div className="flex justify-end gap-2 pt-2">
+                  {user?.current_ward_id &amp;&amp; (
+                    &lt;button
+                      onClick={() => setShowWardConfirm(false)}
+                      className="px-3 py-1 rounded bg-blue-600 text-white text-sm"
+                    >
+                      Yes
+                    &lt;/button>
+                  )}
+                  &lt;button
+                    onClick={() => {
+                      setShowWardConfirm(false);
+                      setShowWardSelect(true);
+                    }}
+                    className="px-3 py-1 rounded bg-gray-200 text-gray-700 text-sm"
+                  >
+                    Change Ward
+                  &lt;/button>
+                &lt;/div>
+              &lt;/div>
+            &lt;/div>
+          &lt;/div>
+        &lt;/Modal>
+      )}
+
+      {showWardSelect &amp;&amp; (
+        &lt;WardSelectDialog
+          isOpen={true}
+          onClose={() => {
+            setShowWardSelect(false);
+            onCancel();
+          }}
+          apiService={apiService}
+          hospitalId={hospitalId}
+          onSelect={handleWardChange}
+        />
+      )}
+
+      {!showWardConfirm &amp;&amp; !showWardSelect &amp;&amp; (
+        &lt;form onSubmit={handleSubmit} className="space-y-4">
+          &lt;div>
+            &lt;label className="block text-sm font-medium text-gray-700 mb-1">Complaint&lt;/label>
+            &lt;textarea
+              name="complaint"
+              value={formData.complaint}
+              onChange={handleChange}
+              className="w-full border rounded p-2"
+              rows={3}
+              required
+            />
+          &lt;/div>
+
+          &lt;div>
+            &lt;label className="block text-sm font-medium text-gray-700 mb-1">Department&lt;/label>
+            &lt;input
+              type="text"
+              name="department"
+              value={formData.department}
+              onChange={handleChange}
+              className="w-full border rounded p-2"
+              required
+            />
+          &lt;/div>
+
+          &lt;div>
+            &lt;label className="block text-sm font-medium text-gray-700 mb-1">Role to Tag&lt;/label>
+            &lt;select
+              name="tagged_role_id"
+              value={formData.tagged_role_id}
+              onChange={handleChange}
+              className="w-full border rounded p-2"
+              required
+            >
+              &lt;option value="" disabled>Select role&lt;/option>
+              {roles.map((r) => (
+                &lt;option key={r.id} value={r.id}>
+                  {r.name}
+                &lt;/option>
+              ))}
+            &lt;/select>
+          &lt;/div>
+
+          &lt;div className="flex justify-end space-x-2 pt-2">
+            {!loading &amp;&amp; (
+              &lt;button
+                type="button"
+                className="px-4 py-2 rounded bg-gray-200 text-gray-700"
+                onClick={onCancel}
+              >
+                Cancel
+              &lt;/button>
+            )}
+            &lt;button
+              type="submit"
+              disabled={loading}
+              className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-60"
+            >
+              {loading ? 'Creating...' : 'Create'}
+            &lt;/button>
+          &lt;/div>
+
+          {createdMemoUuid &amp;&amp; (
+            &lt;div className="mt-4 p-3 bg-green-50 border border-green-200 rounded text-sm text-green-800">
+              ✅ Memo Created Successfully with ID: &lt;strong>{createdMemoUuid}&lt;/strong>
+            &lt;/div>
+          )}
+        &lt;/form>
+      )}
+    &lt;/>
+  );
+};
+
+export default MemoForm;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

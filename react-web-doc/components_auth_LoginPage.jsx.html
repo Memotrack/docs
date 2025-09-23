@@ -1,0 +1,400 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/auth/LoginPage.jsx</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ApiService.html">ApiService</a></li></ul><h3>Global</h3><ul><li><a href="global.html#API_ENDPOINTS">API_ENDPOINTS</a></li><li><a href="global.html#ApproverHierarchyForm">ApproverHierarchyForm</a></li><li><a href="global.html#BackButton">BackButton</a></li><li><a href="global.html#BlockForm">BlockForm</a></li><li><a href="global.html#Checkbox">Checkbox</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#DashboardIframe">DashboardIframe</a></li><li><a href="global.html#FlutterAwareWrapper">FlutterAwareWrapper</a></li><li><a href="global.html#FlutterContext">FlutterContext</a></li><li><a href="global.html#FlutterProvider">FlutterProvider</a></li><li><a href="global.html#FormField">FormField</a></li><li><a href="global.html#MemoDetail">MemoDetail</a></li><li><a href="global.html#MemoEditForm">MemoEditForm</a></li><li><a href="global.html#MemoExplorer">MemoExplorer</a></li><li><a href="global.html#MemoForm">MemoForm</a></li><li><a href="global.html#MemoTabbedList">MemoTabbedList</a></li><li><a href="global.html#MemosPage">MemosPage</a></li><li><a href="global.html#Modal">Modal</a></li><li><a href="global.html#RoleForm">RoleForm</a></li><li><a href="global.html#SetPassword">SetPassword</a></li><li><a href="global.html#Setting">Setting</a></li><li><a href="global.html#ShiftForm">ShiftForm</a></li><li><a href="global.html#USER_ROLES">USER_ROLES</a></li><li><a href="global.html#UserForm">UserForm</a></li><li><a href="global.html#WardSelectDialog">WardSelectDialog</a></li><li><a href="global.html#WorkerStatus">WorkerStatus</a></li><li><a href="global.html#emptyLevel">emptyLevel</a></li><li><a href="global.html#errors">errors</a></li><li><a href="global.html#fieldMap">fieldMap</a></li><li><a href="global.html#getOrGenerateFcmToken">getOrGenerateFcmToken</a></li><li><a href="global.html#handleBlur">handleBlur</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#isOpen">isOpen</a></li><li><a href="global.html#method">method</a></li><li><a href="global.html#onClose">onClose</a></li><li><a href="global.html#onConfirm">onConfirm</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#touched">touched</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useFlutter">useFlutter</a></li><li><a href="global.html#useForm">useForm</a></li><li><a href="global.html#validate">validate</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/auth/LoginPage.jsx</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from 'react';
+import { Building2 } from 'lucide-react';
+import { useAuth } from '../../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
+import { getOrGenerateFcmToken } from '../../notification/firebase';
+import {  useLocation } from 'react-router-dom';
+// import apiService from '../../services/apiService';
+
+const LoginPage = () => {
+  /**
+ * The LoginPage component provides the user interface for logging in and setting a new password.
+ * It includes forms for both actions, handles input state, displays validation errors and success messages,
+ * and interacts with the authentication context (`useAuth`) for login and password setting logic.
+ */
+  const { login,setPasswordfunc } = useAuth();
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const navigate = useNavigate();
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [showSetPassword, setShowSetPassword] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  
+  const location = useLocation();
+
+  /**
+ * Handles the submission of the login form.
+ * Prevents the default form submission, validates input, attempts to generate an FCM token (unless from Flutter),
+ * calls the `login` function from the auth context, and navigates or displays errors based on the result.
+ * @param {React.FormEvent&lt;HTMLFormElement>} e - The form submission event.
+ */
+  const handleLoginSubmit = async (e) => {
+  // Prevent default form submission
+  e.preventDefault();
+
+  if (!phoneNumber || !password) {
+    setError('Please fill in all fields');
+    return;
+  }
+
+  setLoading(true);
+  setError('');
+
+  try {
+    // Check if the login request is originating from a Flutter application via a query parameter.
+    const params = new URLSearchParams(location.search);
+    const isFromFlutter = params.get("source") === "flutter";
+
+    let fcmToken = null;
+    if (isFromFlutter) {
+      console.log("Skipping FCM token generation (from Flutter).");
+    } else {
+      console.log("Generating FCM token (not from Flutter).");
+      fcmToken = await getOrGenerateFcmToken();
+      console.log("FCM Token:", fcmToken);
+    }
+
+    // Attempt to log in the user using the provided phone number, password, and FCM token (if generated).
+    const result = await login(phoneNumber, password, fcmToken);
+
+    if (result.success) {
+      navigate('/');
+    } else {
+      setError(result.message || 'Login failed');
+      setLoading(false);
+    }
+  } catch (err) {
+    console.error("❌ Login error:", err);
+    setError("Something went wrong. Please try again.");
+    setLoading(false);
+  }
+};
+
+  /**
+ * Handles the submission of the set password form.
+ * Prevents the default form submission, validates input (including password matching and length),
+ * calls the `setPasswordfunc` from the auth context, and displays success or error messages
+ * based on the outcome. Resets the form on successful password setting.
+ * @param {React.FormEvent&lt;HTMLFormElement>} e - The form submission event.
+ */
+  const handleSetPasswordSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!phoneNumber || !password || !confirmPassword) {
+      setError('Please fill in all fields');
+      return;
+    }
+    
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+    
+    if (password.length &lt; 6) {
+      setError('Password must be at least 6 characters');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+
+    try {
+      const result = await setPasswordfunc(phoneNumber, password);
+      console.log(result);
+      if (result.detail) {
+        setSuccessMessage('Password set successfully! You can now login.');
+        setShowSetPassword(false);
+        setPassword('');
+        setConfirmPassword('');
+      } else {
+        setError(result.message || 'Failed to set password');
+      }
+    } catch (err) {
+      console.error('Error setting password:', err);
+      setError('An error occurred. Please try again.',err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /**
+ * Toggles the state between showing the login form and the set password form.
+ * Also clears any existing error or success messages and resets the password input fields.
+ */
+  const toggleSetPassword = () => {
+    setShowSetPassword(!showSetPassword);
+    setError('');
+    setSuccessMessage('');
+    setPassword('');
+    setConfirmPassword('');
+  };
+
+  return (
+    &lt;div className="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      &lt;div className="max-w-md w-full space-y-8">
+        &lt;div>
+          &lt;div className="mx-auto h-12 w-12 flex items-center justify-center rounded-full bg-blue-100">
+            &lt;Building2 className="h-6 w-6 text-blue-600" />
+          &lt;/div>
+          &lt;h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            {showSetPassword ? 'Set Your Password' : 'Sign in to MemoTrack'}
+          &lt;/h2>
+        &lt;/div>
+
+        {successMessage &amp;&amp; (
+          &lt;div className="bg-green-50 border border-green-200 text-green-600 px-4 py-3 rounded-md text-sm">
+            {successMessage}
+          &lt;/div>
+        )}
+
+        &lt;div className="mt-8 space-y-6">
+          {showSetPassword ? (
+            // Set Password Form
+            &lt;form className="space-y-4" onSubmit={handleSetPasswordSubmit}>
+              &lt;div>
+                &lt;label htmlFor="set-phone-number" className="block text-sm font-medium text-gray-700">
+                  Phone Number
+                &lt;/label>
+                &lt;input
+                  id="set-phone-number"
+                  type="tel"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Enter your phone number"
+                  required
+                />
+              &lt;/div>
+              
+              &lt;div>
+                &lt;label htmlFor="new-password" className="block text-sm font-medium text-gray-700">
+                  New Password
+                &lt;/label>
+                &lt;input
+                  id="new-password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Enter your new password"
+                  required
+                />
+              &lt;/div>
+              
+              &lt;div>
+                &lt;label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700">
+                  Confirm Password
+                &lt;/label>
+                &lt;input
+                  id="confirm-password"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Confirm your password"
+                  required
+                />
+              &lt;/div>
+
+              {error &amp;&amp; (
+                &lt;div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm">
+                  {error}
+                &lt;/div>
+              )}
+
+              &lt;button
+                type="submit"
+                disabled={loading}
+                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+              >
+                {loading ? 'Setting password...' : 'Set Password'}
+              &lt;/button>
+
+              &lt;button
+                type="button"
+                onClick={toggleSetPassword}
+                className="text-sm text-blue-600 hover:text-blue-500 text-center w-full"
+              >
+                Back to login
+              &lt;/button>
+            &lt;/form>
+          ) : (
+            // Login Form
+            &lt;form className="space-y-4" onSubmit={handleLoginSubmit}>
+              &lt;div>
+                &lt;label htmlFor="phone-number" className="block text-sm font-medium text-gray-700">
+                  Phone Number
+                &lt;/label>
+                &lt;input
+                  id="phone-number"
+                  type="tel"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Enter your phone number"
+                  required
+                />
+              &lt;/div>
+              &lt;div>
+                &lt;label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                  Password
+                &lt;/label>
+                &lt;input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Enter your password"
+                  required
+                />
+              &lt;/div>
+
+              {error &amp;&amp; (
+                &lt;div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm">
+                  {error}
+                &lt;/div>
+              )}
+
+              &lt;button
+                type="submit"
+                disabled={loading}
+                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+              >
+                {loading ? 'Signing in...' : 'Sign in'}
+              &lt;/button>
+
+              &lt;button
+                type="button"
+                onClick={toggleSetPassword}
+                className="text-sm text-blue-600 hover:text-blue-500 text-center w-full"
+              >
+                Need to set a password?
+              &lt;/button>
+            &lt;/form>
+          )}
+        &lt;/div>
+      &lt;/div>
+    &lt;/div>
+  );
+};
+
+export default LoginPage;</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

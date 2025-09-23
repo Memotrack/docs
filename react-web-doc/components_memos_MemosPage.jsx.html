@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/memos/MemosPage.jsx</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ApiService.html">ApiService</a></li></ul><h3>Global</h3><ul><li><a href="global.html#API_ENDPOINTS">API_ENDPOINTS</a></li><li><a href="global.html#ApproverHierarchyForm">ApproverHierarchyForm</a></li><li><a href="global.html#BackButton">BackButton</a></li><li><a href="global.html#BlockForm">BlockForm</a></li><li><a href="global.html#Checkbox">Checkbox</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#DashboardIframe">DashboardIframe</a></li><li><a href="global.html#FlutterAwareWrapper">FlutterAwareWrapper</a></li><li><a href="global.html#FlutterContext">FlutterContext</a></li><li><a href="global.html#FlutterProvider">FlutterProvider</a></li><li><a href="global.html#FormField">FormField</a></li><li><a href="global.html#MemoDetail">MemoDetail</a></li><li><a href="global.html#MemoEditForm">MemoEditForm</a></li><li><a href="global.html#MemoExplorer">MemoExplorer</a></li><li><a href="global.html#MemoForm">MemoForm</a></li><li><a href="global.html#MemoTabbedList">MemoTabbedList</a></li><li><a href="global.html#MemosPage">MemosPage</a></li><li><a href="global.html#Modal">Modal</a></li><li><a href="global.html#RoleForm">RoleForm</a></li><li><a href="global.html#SetPassword">SetPassword</a></li><li><a href="global.html#Setting">Setting</a></li><li><a href="global.html#ShiftForm">ShiftForm</a></li><li><a href="global.html#USER_ROLES">USER_ROLES</a></li><li><a href="global.html#UserForm">UserForm</a></li><li><a href="global.html#WardSelectDialog">WardSelectDialog</a></li><li><a href="global.html#WorkerStatus">WorkerStatus</a></li><li><a href="global.html#emptyLevel">emptyLevel</a></li><li><a href="global.html#errors">errors</a></li><li><a href="global.html#fieldMap">fieldMap</a></li><li><a href="global.html#getOrGenerateFcmToken">getOrGenerateFcmToken</a></li><li><a href="global.html#handleBlur">handleBlur</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#isOpen">isOpen</a></li><li><a href="global.html#method">method</a></li><li><a href="global.html#onClose">onClose</a></li><li><a href="global.html#onConfirm">onConfirm</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#touched">touched</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useFlutter">useFlutter</a></li><li><a href="global.html#useForm">useForm</a></li><li><a href="global.html#validate">validate</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/memos/MemosPage.jsx</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState } from 'react';
+import { useAuth } from '../../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
+import { Plus } from 'lucide-react'; // Import Plus icon for the create button
+import Modal from '../ui/Modal';
+import MemoTabbedList from '../prototype/MemoTabbedList';
+import toast from 'react-hot-toast';
+import MemoForm from './MemoForm';
+
+/**
+ * MemosPage Component
+ *
+ * This component displays a list of memos for the current user within a specific hospital context.
+ * It fetches memos upon loading, allows memo creators to initiate the creation of new memos via a modal,
+ * and provides navigation to individual memo detail pages.
+ *
+ * It utilizes `useAuth` for accessing user information, API services, and hospital context,
+ * `useNavigate` for routing, and various state variables to manage loading states, memo data,
+ * and modal visibility.
+ */
+const MemosPage = () => {
+  // Fetch user, API service, and hospital context from the authentication hook
+  const { user, apiService, hospital } = useAuth();
+  const hospitalId = hospital?.id || localStorage.getItem('hospitalId');
+  const navigate = useNavigate();
+
+
+  const [memos, setMemos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [createOpen, setCreateOpen] = useState(false);
+
+  const isCreator = user?.is_creator;
+
+  useEffect(() => {
+    /**
+ * Asynchronously loads the memos for the current user and hospital.
+ * Sets the fetched memos into the `memos` state, handles loading state,
+ * and displays error messages using `react-hot-toast` if the fetch fails.
+ */
+    const loadMemos = async () => {
+      try {
+        // Fetch memos from the API service
+        const data = await apiService.getUserMemos(hospitalId);
+        // Log the fetched data for debugging
+        console.log(data);  
+        setMemos(data);
+      } catch (err) {
+        console.error(err);
+        toast.error(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadMemos();
+  }, [apiService, hospitalId]);
+
+  /**
+ * Handles the click event on a memo row.
+ * Navigates the user to the detail page for the clicked memo.
+ *
+ * @param {object} memo - The memo object that was clicked.
+ * @param {string} memo.memoId - The unique identifier of the memo.
+ */
+  const handleRowClick = (memo) => {
+    navigate(`/memo/${memo.memoId}`);
+  };
+
+  /**
+ * Handles the successful creation of a new memo.
+ * Closes the memo creation modal and navigates to the newly created memo's detail page.
+ *
+ * @param {string} memoId - The unique identifier of the newly created memo.
+ */
+  const handleCreateSuccess = (memoId) => {
+    setCreateOpen(false);
+    navigate(`/memo/${memoId}`);
+  };
+
+  // Helper function to format date strings (currently not used in the rendered JSX)
+  const formatDate = (dateString) => {
+    // Create a new Date object from the input string
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  // Helper function to determine status color based on tagged role (currently not used in the rendered JSX)
+  const getStatusColor = (taggedRoleName) => {
+    // You can customize this based on your business logic
+    const colors = {
+      'nursing superintendent': 'bg-blue-100 text-blue-800',
+      'doctor': 'bg-green-100 text-green-800',
+      'admin': 'bg-purple-100 text-purple-800',
+      'default': 'bg-gray-100 text-gray-800'
+    };
+    return colors[taggedRoleName?.toLowerCase()] || colors.default;
+  };
+
+  return (
+    // Main container with minimal height and background color
+    &lt;div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      &lt;div className="bg-white shadow-sm border-b sticky top-0 z-10">
+        &lt;div className="px-4 py-4">
+          &lt;div className="flex justify-between items-center">
+            &lt;div>
+              &lt;h1 className="text-xl font-bold text-gray-900">Memos&lt;/h1>
+              &lt;p className="text-sm text-gray-500 mt-1">{memos.length} active memos&lt;/p>
+            &lt;/div>
+            {/* Show the Create button only if the user is a creator */}
+            {isCreator &amp;&amp; (
+              &lt;button
+                onClick={() => setCreateOpen(true)}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors flex items-center gap-2 shadow-sm"
+              >
+                &lt;Plus className="w-4 h-4" />
+                Create
+              &lt;/button>
+            )}
+          &lt;/div>
+        &lt;/div>
+      &lt;/div>
+
+      {/* Content */}
+      &lt;div className="px-4 py-4">
+        {loading ? (
+          // Display a loading spinner while fetching memos
+          &lt;div className="flex justify-center items-center py-12">
+            &lt;div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600">&lt;/div>
+          &lt;/div>
+        ) : memos.length === 0 ? (
+          // Display a message when no memos are found
+          &lt;div className="text-center py-12">
+            &lt;div className="text-gray-400 text-4xl mb-4">📝&lt;/div>
+            &lt;p className="text-gray-500 text-lg">No memos found&lt;/p>
+            &lt;p className="text-gray-400 text-sm mt-2">Create your first memo to get started&lt;/p>
+          &lt;/div>
+        ) : (
+          &lt;MemoTabbedList data={memos} onMemoClick={handleRowClick} />
+        )}
+      &lt;/div>
+
+      {/* Modal for creating a new memo */}
+      &lt;Modal
+        isOpen={createOpen}
+        onClose={() => setCreateOpen(false)}
+        title="Create Memo"
+        size="md"
+      >
+        &lt;MemoForm
+          onSuccess={handleCreateSuccess}
+          onCancel={() => setCreateOpen(false)}
+        />
+      &lt;/Modal>
+    &lt;/div>
+  );
+
+  // Note: formatDate and getStatusColor are defined but not currently used in the rendered JSX.
+  // They might be intended for future use within the MemoTabbedList or memo detail views.
+};
+
+export default MemosPage;</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

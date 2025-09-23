@@ -1,0 +1,370 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/prototype/MemoTabbedList.jsx</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ApiService.html">ApiService</a></li></ul><h3>Global</h3><ul><li><a href="global.html#API_ENDPOINTS">API_ENDPOINTS</a></li><li><a href="global.html#ApproverHierarchyForm">ApproverHierarchyForm</a></li><li><a href="global.html#BackButton">BackButton</a></li><li><a href="global.html#BlockForm">BlockForm</a></li><li><a href="global.html#Checkbox">Checkbox</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#DashboardIframe">DashboardIframe</a></li><li><a href="global.html#FlutterAwareWrapper">FlutterAwareWrapper</a></li><li><a href="global.html#FlutterContext">FlutterContext</a></li><li><a href="global.html#FlutterProvider">FlutterProvider</a></li><li><a href="global.html#FormField">FormField</a></li><li><a href="global.html#MemoDetail">MemoDetail</a></li><li><a href="global.html#MemoEditForm">MemoEditForm</a></li><li><a href="global.html#MemoExplorer">MemoExplorer</a></li><li><a href="global.html#MemoForm">MemoForm</a></li><li><a href="global.html#MemoTabbedList">MemoTabbedList</a></li><li><a href="global.html#MemosPage">MemosPage</a></li><li><a href="global.html#Modal">Modal</a></li><li><a href="global.html#RoleForm">RoleForm</a></li><li><a href="global.html#SetPassword">SetPassword</a></li><li><a href="global.html#Setting">Setting</a></li><li><a href="global.html#ShiftForm">ShiftForm</a></li><li><a href="global.html#USER_ROLES">USER_ROLES</a></li><li><a href="global.html#UserForm">UserForm</a></li><li><a href="global.html#WardSelectDialog">WardSelectDialog</a></li><li><a href="global.html#WorkerStatus">WorkerStatus</a></li><li><a href="global.html#emptyLevel">emptyLevel</a></li><li><a href="global.html#errors">errors</a></li><li><a href="global.html#fieldMap">fieldMap</a></li><li><a href="global.html#getOrGenerateFcmToken">getOrGenerateFcmToken</a></li><li><a href="global.html#handleBlur">handleBlur</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#isOpen">isOpen</a></li><li><a href="global.html#method">method</a></li><li><a href="global.html#onClose">onClose</a></li><li><a href="global.html#onConfirm">onConfirm</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#touched">touched</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useFlutter">useFlutter</a></li><li><a href="global.html#useForm">useForm</a></li><li><a href="global.html#validate">validate</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/prototype/MemoTabbedList.jsx</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Building, ChevronRight, MapPin } from 'lucide-react';
+import { useMemo, useState } from 'react';
+
+/**
+ * A tabbed list component for displaying and filtering memos.
+ *
+ * @param {object} props - The component props.
+ * @param {object|Array} props.data - The memo data, either an array or an object with tab keys.
+ * @param {function} [props.onMemoClick] - Callback function when a memo card is clicked.
+ **/
+const MemoTabbedList = ({ data, onMemoClick }) => {
+  const tabMap = useMemo(() => {
+    if (!data) return {};
+    if (Array.isArray(data)) {
+      const flat = data.map((m) => ({ ...m, ...m.latest_snapshot }));
+      return { All: flat };
+    }
+    const firstKey = Object.keys(data)[0] || 'default';
+    return data[firstKey] || {};
+  }, [data]);
+
+  const tabNames = Object.keys(tabMap);
+  const [activeTab, setActiveTab] = useState(tabNames[0] || '');
+
+  const allMemos = tabMap[activeTab] || [];
+
+  const unique = (arr) => [...new Set(arr.filter(Boolean))];
+  const wardOptions = unique(allMemos.map((m) => m.latest_snapshot.current_ward_name));
+  const blockOptions = unique(allMemos.map((m) => m.latest_snapshot.current_block_name));
+  const floorOptions = unique(allMemos.map((m) => m.latest_snapshot.current_floor));
+  const deptOptions = unique(allMemos.map((m) => m.latest_snapshot.department));
+
+  const [searchInput, setSearchInput] = useState('');
+  const [wardInput, setWardInput] = useState('');
+  const [blockInput, setBlockInput] = useState('');
+  const [floorInput, setFloorInput] = useState('');
+  const [deptInput, setDeptInput] = useState('');
+  const [dateInput, setDateInput] = useState('');
+
+  const [search, setSearch] = useState('');
+  const [wardFilter, setWardFilter] = useState('');
+  const [blockFilter, setBlockFilter] = useState('');
+  const [floorFilter, setFloorFilter] = useState('');
+  const [deptFilter, setDeptFilter] = useState('');
+  const [dateFilter, setDateFilter] = useState('');
+
+  const [filtersVisible, setFiltersVisible] = useState(false);
+
+  const applyFilters = () => {
+    setSearch(searchInput);
+    setWardFilter(wardInput);
+    setBlockFilter(blockInput);
+    setFloorFilter(floorInput);
+    setDeptFilter(deptInput);
+    setDateFilter(dateInput);
+  };
+
+  const resetFilters = () => {
+    setSearchInput('');
+    setWardInput('');
+    setBlockInput('');
+    setFloorInput('');
+    setDeptInput('');
+    setDateInput('');
+    setSearch('');
+    setWardFilter('');
+    setBlockFilter('');
+    setFloorFilter('');
+    setDeptFilter('');
+    setDateFilter('');
+  };
+
+  const filtered = allMemos.filter((m) => {
+    const dateOnly = (d) => new Date(d).toISOString().split('T')[0];
+    const textOk = search ? (m.latest_snapshot.complaint || '').toLowerCase().includes(search.toLowerCase()) : true;
+    const wardOk = wardFilter ? m.latest_snapshot.current_ward_name === wardFilter : true;
+    const deptOk = deptFilter ? m.latest_snapshot.department === deptFilter : true;
+    const blockOk = blockFilter ? m.latest_snapshot.current_block_name === blockFilter : true;
+    const floorOk = floorFilter ? String(m.latest_snapshot.current_floor) === String(floorFilter) : true;
+    const dateOk = dateFilter ? dateOnly(m.created_at) === dateFilter : true;
+    return textOk &amp;&amp; wardOk &amp;&amp; deptOk &amp;&amp; blockOk &amp;&amp; floorOk &amp;&amp; dateOk;
+  });
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
+  const getStatusColor = (taggedRoleName) => {
+    const colors = {
+      'nursing superintendent': 'bg-blue-100 text-blue-800',
+      doctor: 'bg-green-100 text-green-800',
+      admin: 'bg-purple-100 text-purple-800',
+      default: 'bg-gray-100 text-gray-800',
+    };
+    return colors[taggedRoleName?.toLowerCase()] || colors.default;
+  };
+
+  function getDisplayStatusColor(status) {
+    switch (status.toLowerCase()) {
+      case 'completed':
+        return 'bg-green-100 text-green-800';
+      case 'attended':
+        return 'bg-blue-100 text-blue-800';
+      case 'incomplete':
+        return 'bg-red-100 text-red-800';
+      case 'tagged':
+        return 'bg-yellow-100 text-yellow-800';
+      default:
+        return 'bg-gray-100 text-gray-700'; // for 'pending' or unknown
+    }
+  }
+
+
+  return (
+    &lt;div className="space-y-4">
+      {/* Tabs */}
+      &lt;div className="flex gap-2 flex-wrap">
+        {tabNames.map((tab) => (
+          &lt;button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${tab === activeTab ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+          >
+            {tab}
+          &lt;/button>
+        ))}
+      &lt;/div>
+
+      {/* Filter Toggle Button */}
+      &lt;div>
+        &lt;button
+          className="bg-blue-100 text-blue-700 px-4 py-2 rounded-md text-sm mb-2"
+          onClick={() => setFiltersVisible((prev) => !prev)}
+        >
+          {filtersVisible ? 'Hide Filters' : 'Memo Filter'}
+        &lt;/button>
+      &lt;/div>
+
+      {/* Filters */}
+      {filtersVisible &amp;&amp; (
+        &lt;div className="bg-gray-50 border rounded-md p-4 space-y-3">
+          &lt;div className="grid grid-cols-1 md:grid-cols-6 gap-3">
+            &lt;input
+              type="text"
+              placeholder="Search complaint"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              className="border rounded-md px-3 py-2 text-sm w-full"
+            />
+            &lt;select value={wardInput} onChange={(e) => setWardInput(e.target.value)} className="border rounded-md px-3 py-2 text-sm w-full">
+              &lt;option value="">All Wards&lt;/option>
+              {wardOptions.map((w) => &lt;option key={w} value={w}>{w}&lt;/option>)}
+            &lt;/select>
+            &lt;select value={deptInput} onChange={(e) => setDeptInput(e.target.value)} className="border rounded-md px-3 py-2 text-sm w-full">
+              &lt;option value="">All Departments&lt;/option>
+              {deptOptions.map((d) => &lt;option key={d} value={d}>{d}&lt;/option>)}
+            &lt;/select>
+            &lt;select value={blockInput} onChange={(e) => setBlockInput(e.target.value)} className="border rounded-md px-3 py-2 text-sm w-full">
+              &lt;option value="">All Blocks&lt;/option>
+              {blockOptions.map((b) => &lt;option key={b} value={b}>{b}&lt;/option>)}
+            &lt;/select>
+            &lt;select value={floorInput} onChange={(e) => setFloorInput(e.target.value)} className="border rounded-md px-3 py-2 text-sm w-full">
+              &lt;option value="">All Floors&lt;/option>
+              {floorOptions.map((f) => &lt;option key={f} value={f}>{f}&lt;/option>)}
+            &lt;/select>
+            &lt;input
+              type="date"
+              value={dateInput}
+              onChange={(e) => setDateInput(e.target.value)}
+              className="border rounded-md px-3 py-2 text-sm w-full"
+            />
+          &lt;/div>
+
+          &lt;div className="flex gap-2 justify-end">
+            &lt;button
+              onClick={resetFilters}
+              className="text-gray-600 border border-gray-300 px-4 py-2 rounded-md text-sm hover:bg-gray-100"
+            >
+              Reset Filters
+            &lt;/button>
+            &lt;button
+              onClick={applyFilters}
+              className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm"
+            >
+              Apply Filters
+            &lt;/button>
+          &lt;/div>
+        &lt;/div>
+      )}
+
+      {/* Memo Cards */}
+      &lt;div className="space-y-3 max-h-[500px] overflow-y-auto pr-1">
+        {filtered.length === 0 ? (
+          &lt;p className="text-sm text-gray-500">No memos match your criteria.&lt;/p>
+        ) : (
+          filtered.map((memo) => {
+            const snapshot = memo.latest_snapshot;
+            const status = snapshot.display_status ||snapshot.status || 'pending';
+
+            return (
+              &lt;div
+                key={memo.memoId}
+                className="bg-white rounded-lg shadow-sm border border-gray-200 p-3 active:bg-gray-50 transition-all cursor-pointer hover:shadow-md"
+                onClick={() => onMemoClick?.(memo)}
+              >
+                &lt;div className="flex justify-between items-center mb-2">
+                  &lt;div className="flex items-center gap-2">
+                    &lt;span className={`text-xs px-2 py-1 rounded-full font-medium ${getStatusColor(snapshot.tagged_role_name)}`}>
+                      {snapshot.tagged_role_name || 'Unassigned'}
+                    &lt;/span>
+                    &lt;span className="text-xs text-gray-500">{formatDate(memo.created_at)}&lt;/span>
+                  &lt;/div>
+                  &lt;ChevronRight className="w-4 h-4 text-gray-400" />
+                &lt;/div>
+
+                &lt;h3 className="font-medium text-gray-900 mb-2 line-clamp-2">
+                  {snapshot.complaint || 'No complaint description available'}
+                &lt;/h3>
+
+                {/* Status badge */}
+                &lt;div className="mb-2">
+                  &lt;span className={`inline-block text-xs px-2 py-1 rounded-full font-semibold capitalize ${getDisplayStatusColor(status)}`}>
+                    {status}
+                  &lt;/span>
+                &lt;/div>
+
+                &lt;div className="flex items-center gap-4 text-sm text-gray-600">
+                  &lt;span className="flex items-center gap-1">
+                    &lt;Building className="w-3 h-3" />
+                    {snapshot.department}
+                  &lt;/span>
+                  &lt;span className="flex items-center gap-1">
+                    &lt;MapPin className="w-3 h-3" />
+                    {snapshot.current_ward_name}
+                  &lt;/span>
+                &lt;/div>
+              &lt;/div>
+            );
+          })
+        )}
+      &lt;/div>
+
+    &lt;/div>
+  );
+};
+
+export default MemoTabbedList;</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

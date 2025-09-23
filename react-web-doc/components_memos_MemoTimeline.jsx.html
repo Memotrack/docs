@@ -1,0 +1,468 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/memos/MemoTimeline.jsx</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ApiService.html">ApiService</a></li></ul><h3>Global</h3><ul><li><a href="global.html#API_ENDPOINTS">API_ENDPOINTS</a></li><li><a href="global.html#ApproverHierarchyForm">ApproverHierarchyForm</a></li><li><a href="global.html#BackButton">BackButton</a></li><li><a href="global.html#BlockForm">BlockForm</a></li><li><a href="global.html#Checkbox">Checkbox</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#DashboardIframe">DashboardIframe</a></li><li><a href="global.html#FlutterAwareWrapper">FlutterAwareWrapper</a></li><li><a href="global.html#FlutterContext">FlutterContext</a></li><li><a href="global.html#FlutterProvider">FlutterProvider</a></li><li><a href="global.html#FormField">FormField</a></li><li><a href="global.html#MemoDetail">MemoDetail</a></li><li><a href="global.html#MemoEditForm">MemoEditForm</a></li><li><a href="global.html#MemoExplorer">MemoExplorer</a></li><li><a href="global.html#MemoForm">MemoForm</a></li><li><a href="global.html#MemoTabbedList">MemoTabbedList</a></li><li><a href="global.html#MemosPage">MemosPage</a></li><li><a href="global.html#Modal">Modal</a></li><li><a href="global.html#RoleForm">RoleForm</a></li><li><a href="global.html#SetPassword">SetPassword</a></li><li><a href="global.html#Setting">Setting</a></li><li><a href="global.html#ShiftForm">ShiftForm</a></li><li><a href="global.html#USER_ROLES">USER_ROLES</a></li><li><a href="global.html#UserForm">UserForm</a></li><li><a href="global.html#WardSelectDialog">WardSelectDialog</a></li><li><a href="global.html#WorkerStatus">WorkerStatus</a></li><li><a href="global.html#emptyLevel">emptyLevel</a></li><li><a href="global.html#errors">errors</a></li><li><a href="global.html#fieldMap">fieldMap</a></li><li><a href="global.html#getOrGenerateFcmToken">getOrGenerateFcmToken</a></li><li><a href="global.html#handleBlur">handleBlur</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#isOpen">isOpen</a></li><li><a href="global.html#method">method</a></li><li><a href="global.html#onClose">onClose</a></li><li><a href="global.html#onConfirm">onConfirm</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#touched">touched</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useFlutter">useFlutter</a></li><li><a href="global.html#useForm">useForm</a></li><li><a href="global.html#validate">validate</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/memos/MemoTimeline.jsx</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Check, ChevronRight, Clock } from 'lucide-react';
+import { useState } from 'react';
+import { useAuth } from '../../hooks/useAuth';
+
+const MemoTimeline = ({ memoId, data }) => {
+  /**
+ * Component that displays the approval timeline for a specific memo.
+ * Allows users to approve or reject steps based on their role and superuser status.
+ *
+ * @param {number} memoId - The ID of the memo whose timeline is being displayed.
+ * @param {Array&lt;Object>} data - The initial timeline data (array of approval steps).
+ */
+  const [timelineData, setTimelineData] = useState(data);
+  const [loading, setLoading] = useState(null);
+  const [rejecting, setRejecting] = useState(null);
+  const { user, hospital, apiService } = useAuth();
+  
+  const currentUserRole = user.role_id;
+  const isCurrentUserSuperuser = user.is_superuser || false;
+
+  const handleApprove = async (itemId) => {
+    /**
+ * Handles the approval action for a specific timeline item.
+ * Updates the state optimistically before the API call completes.
+ * @param {number} itemId - The ID of the timeline item (approval step) to approve.
+ */
+    setLoading(itemId);
+    
+    try {
+      const metadata = JSON.parse(localStorage.getItem('user')) || '{}';
+      const response = await apiService.approveMemo(hospital.id, memoId, metadata);   
+      console.log(response);
+      
+      // Update state without refetching
+      setTimelineData(prev => prev.map(item => 
+        item.id === itemId 
+          ? { 
+              ...item, 
+              approved: true, 
+              approved_at: new Date().toISOString(),
+              approved_by: user.id || user.name || user.username || 'Current User',
+              rejected: false,
+              rejected_at: null,
+              rejected_by: null
+            }
+          : item
+      ));
+      
+    } catch (error) {
+      console.error('Approval failed:', error);
+      // Handle error - maybe show toast
+    } finally {
+      setLoading(null);
+    }
+  };
+
+  const handleReject = async (itemId) => {
+    /**
+ * Handles the rejection (undo approval) action for a specific timeline item.
+ * Updates the state optimistically before the API call completes.
+ * @param {number} itemId - The ID of the timeline item (approval step) to reject/undo.
+ */
+    setRejecting(itemId);
+    
+    try {
+      const metadata = JSON.parse(localStorage.getItem('user')) || '{}';
+      const response = await apiService.rejectMemo(hospital.id, memoId, metadata);   
+      console.log(response);
+      
+      // Update state - revert to original unapproved state
+      setTimelineData(prev => prev.map(item => 
+        item.id === itemId 
+          ? { 
+              ...item, 
+              rejected: false,
+              rejected_at: null,
+              rejected_by: null,
+              approved: false,
+              approved_at: null,
+              approved_by: null
+            }
+          : item
+      ));
+      
+    } catch (error) {
+      console.error('Rejection failed:', error);
+      // Handle error - maybe show toast
+    } finally {
+      setRejecting(null);
+    }
+  };
+
+  const formatTimestamp = (timestamp) => {
+    /**
+ * Formats a given timestamp string into a readable date and time string.
+ * @param {string|null} timestamp - The timestamp string to format.
+ * @returns {string|null} The formatted date and time string, or null if the timestamp is null.
+ */
+    if (!timestamp) return null;
+    const date = new Date(timestamp);
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  const getStepStatus = (item) => {
+    /**
+ * Determines the status of a timeline item based on its 'approved' property.
+ * @param {Object} item - The timeline item object.
+ * @returns {'approved'|'pending'} The status string ('approved' or 'pending').
+ */
+    if (item.approved) return 'approved';
+    return 'pending';
+  };
+
+  const canUserApprove = (item) => {
+    /**
+ * Checks if the current logged-in user can approve a given timeline item.
+ * @param {Object} item - The timeline item object.
+ */
+    // User can approve if:
+    // 1. It's their role and not already approved
+    return item.role === currentUserRole &amp;&amp; !item.approved;
+  };
+
+  const canUserReject = (item) => {
+    // User can reject/undo if:
+    /**
+ * Checks if the current logged-in user can reject (undo approval) a given timeline item.
+ * @param {Object} item - The timeline item object.
+ */
+    // 1. It's approved AND (they approved it OR they're a superuser)
+    
+    // Check multiple possible matches since server might return different identifier
+    const possibleMatches = [
+      user.id,
+      user.name, 
+      user.username,
+      user.first_name,
+      user.last_name,
+      `${user.first_name} ${user.last_name}`.trim(),
+      user.email
+    ].filter(Boolean); // Remove undefined/null values
+    
+    const userApprovedIt = possibleMatches.includes(item.approved_by);
+    
+    // Also check if the current user's ID matches the 'by' field (user ID who approved)
+    const userApprovedItById = item.by === user.id;
+    
+    // Debug logging
+    // console.log('Debug canUserReject:', {
+    //   itemId: item.id,
+    //   approvedBy: item.approved_by,
+    //   byId: item.by,
+    //   possibleMatches,
+    //   userApprovedIt,
+    //   userApprovedItById,
+    //   currentUserId: user.id,
+    //   isCurrentUserSuperuser,
+    //   canReject: item.approved &amp;&amp; ((userApprovedIt || userApprovedItById) || isCurrentUserSuperuser)
+    // });
+    
+    return item.approved &amp;&amp; ((userApprovedIt || userApprovedItById) || isCurrentUserSuperuser);
+  };
+
+  const getStatusColor = (status) => {
+    /**
+ * Returns Tailwind CSS classes for styling based on the status of a timeline item.
+ * @param {'approved'|'pending'} status - The status of the timeline item.
+ * @returns {Object} An object containing Tailwind classes for background, border, text, and icon colors.
+ */
+    switch (status) {
+      case 'approved':
+        return {
+          bg: 'bg-green-100',
+          border: 'border-green-500',
+          text: 'text-green-700',
+          icon: 'text-green-600'
+        };
+      case 'pending':
+      default:
+        return {
+          bg: 'bg-gray-100',
+          border: 'border-gray-300',
+          text: 'text-gray-500',
+          icon: 'text-gray-400'
+        };
+    }
+  };
+
+  return (
+    &lt;div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 max-w-[400px] mx-auto">
+      &lt;div className="flex items-center gap-2 mb-4">
+        &lt;ChevronRight className="w-5 h-5 text-gray-600" />
+        &lt;h3 className="text-lg font-semibold text-gray-900">Approval Timeline&lt;/h3>
+      &lt;/div>
+
+      &lt;div className="space-y-4">
+        {timelineData
+          .sort((a, b) => a.priority - b.priority)
+          .map((item, index) => {
+            const status = getStepStatus(item);
+            const colors = getStatusColor(status);
+            const isLastItem = index === timelineData.length - 1;
+            
+            return (
+              &lt;div key={item.id} className="relative">
+                {/* Timeline line */}
+                {!isLastItem &amp;&amp; (
+                  &lt;div className="absolute left-6 top-12 w-0.5 h-8 bg-gray-200">&lt;/div>
+                )}
+                
+                &lt;div className="flex items-start gap-4">
+                  {/* Timeline dot */}
+                  &lt;div className={`w-12 h-12 rounded-full ${colors.bg} ${colors.border} border-2 flex items-center justify-center flex-shrink-0`}>
+                    {status === 'approved' ? (
+                      &lt;Check className={`w-6 h-6 ${colors.icon}`} />
+                    ) : (
+                      &lt;Clock className={`w-5 h-5 ${colors.icon}`} />
+                    )}
+                  &lt;/div>
+
+                  {/* Content */}
+                  &lt;div className="flex-1 min-w-0">
+                    &lt;div className="flex items-center justify-between mb-1">
+                      &lt;div>
+                        &lt;h4 className={`font-medium ${colors.text}`}>
+                          {item.role_name}
+                        &lt;/h4>
+                        &lt;p className="text-sm text-gray-500">
+                          Priority {item.priority}
+                        &lt;/p>
+                      &lt;/div>
+
+                      {/* Action buttons */}
+                      {(canUserApprove(item) || canUserReject(item)) &amp;&amp; (
+                        &lt;div className="flex gap-2">
+                          {canUserReject(item) &amp;&amp; (
+                            &lt;button
+                              onClick={() => handleReject(item.id)}
+                              disabled={rejecting === item.id || loading === item.id}
+                              className="bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            >
+                              {rejecting === item.id ? (
+                                &lt;div className="flex items-center gap-2">
+                                  &lt;div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin">&lt;/div>
+                                  Undoing...
+                                &lt;/div>
+                              ) : (
+                                'Undo Approval'
+                              )}
+                            &lt;/button>
+                          )}
+                          {canUserApprove(item) &amp;&amp; (
+                            &lt;button
+                              onClick={() => handleApprove(item.id)}
+                              disabled={loading === item.id || rejecting === item.id}
+                              className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            >
+                              {loading === item.id ? (
+                                &lt;div className="flex items-center gap-2">
+                                  &lt;div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin">&lt;/div>
+                                  Approving...
+                                &lt;/div>
+                              ) : (
+                                'Approve'
+                              )}
+                            &lt;/button>
+                          )}
+                        &lt;/div>
+                      )}
+                    &lt;/div>
+
+                    {/* Status and timestamp */}
+                    &lt;div className="flex flex-col gap-2">
+                      &lt;div className="flex items-center gap-2 text-sm">
+                        &lt;span className={`px-2 py-1 rounded-full text-xs font-medium ${colors.bg} ${colors.text}`}>
+                          {status === 'approved' ? 'Approved' : 'Pending Approval'}
+                        &lt;/span>
+                        
+                        {item.approved_at &amp;&amp; (
+                          &lt;span className="text-gray-500">
+                            on {formatTimestamp(item.approved_at)}
+                          &lt;/span>
+                        )}
+                      &lt;/div>
+
+                      {/* Show approved by information */}
+                      {item.approved_by &amp;&amp; (
+  &lt;div className="text-xs text-green-600">
+    ✓ &lt;span className="font-semibold">Approved by:&lt;/span> &lt;span className="font-bold">{item.approved_by}&lt;/span>
+  &lt;/div>
+)}
+
+                    &lt;/div>
+
+                    {/* Helper text */}
+                    {status === 'pending' &amp;&amp; item.role === currentUserRole &amp;&amp; (
+                      &lt;p className="text-sm text-blue-600 mt-2">
+                        ✨ You can approve this step
+                      &lt;/p>
+                    )}
+                    {status === 'approved' &amp;&amp; canUserReject(item) &amp;&amp; (
+                      &lt;p className="text-sm text-green-600 mt-2">
+                        {(item.by === user.id || [user.id, user.name, user.username, user.first_name, user.last_name, `${user.first_name} ${user.last_name}`.trim(), user.email].filter(Boolean).includes(item.approved_by))
+                          ? "✓ You approved this step - you can undo if needed"
+                          : "✓ You can undo this approval (superuser privilege)"
+                        }
+                      &lt;/p>
+                    )}
+                    {status === 'pending' &amp;&amp; item.role !== currentUserRole &amp;&amp; (
+                      &lt;p className="text-sm text-gray-400 mt-2">
+                        Waiting for {item.role_name} approval
+                      &lt;/p>
+                    )}
+                  &lt;/div>
+                &lt;/div>
+              &lt;/div>
+            );
+          })}
+      &lt;/div>
+
+      {/* Overall status */}
+      {/* &lt;div className="mt-6 pt-4 border-t border-gray-200">
+        &lt;div className="flex items-center justify-between">
+          &lt;span className="text-sm text-gray-600">Overall Progress&lt;/span>
+          &lt;div className="flex items-center gap-4">
+            &lt;span className="text-sm font-medium text-green-600">
+              {timelineData.filter(item => item.approved).length} approved
+            &lt;/span>
+            &lt;span className="text-sm font-medium">
+              {timelineData.filter(item => item.approved).length} of {timelineData.length} completed
+            &lt;/span>
+          &lt;/div>
+        &lt;/div>
+        &lt;div className="mt-2 w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+          &lt;div 
+            className="bg-green-600 transition-all duration-300 h-full"
+            style={{ 
+              width: `${(timelineData.filter(item => item.approved).length / timelineData.length) * 100}%` 
+            }}
+          >&lt;/div>
+        &lt;/div>
+      &lt;/div> */}
+    &lt;/div>
+  );
+};
+
+export default MemoTimeline;</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

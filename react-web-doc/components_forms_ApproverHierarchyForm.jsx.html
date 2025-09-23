@@ -1,0 +1,338 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/forms/ApproverHierarchyForm.jsx</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ApiService.html">ApiService</a></li></ul><h3>Global</h3><ul><li><a href="global.html#API_ENDPOINTS">API_ENDPOINTS</a></li><li><a href="global.html#ApproverHierarchyForm">ApproverHierarchyForm</a></li><li><a href="global.html#BackButton">BackButton</a></li><li><a href="global.html#BlockForm">BlockForm</a></li><li><a href="global.html#Checkbox">Checkbox</a></li><li><a href="global.html#DashboardContent">DashboardContent</a></li><li><a href="global.html#DashboardIframe">DashboardIframe</a></li><li><a href="global.html#FlutterAwareWrapper">FlutterAwareWrapper</a></li><li><a href="global.html#FlutterContext">FlutterContext</a></li><li><a href="global.html#FlutterProvider">FlutterProvider</a></li><li><a href="global.html#FormField">FormField</a></li><li><a href="global.html#MemoDetail">MemoDetail</a></li><li><a href="global.html#MemoEditForm">MemoEditForm</a></li><li><a href="global.html#MemoExplorer">MemoExplorer</a></li><li><a href="global.html#MemoForm">MemoForm</a></li><li><a href="global.html#MemoTabbedList">MemoTabbedList</a></li><li><a href="global.html#MemosPage">MemosPage</a></li><li><a href="global.html#Modal">Modal</a></li><li><a href="global.html#RoleForm">RoleForm</a></li><li><a href="global.html#SetPassword">SetPassword</a></li><li><a href="global.html#Setting">Setting</a></li><li><a href="global.html#ShiftForm">ShiftForm</a></li><li><a href="global.html#USER_ROLES">USER_ROLES</a></li><li><a href="global.html#UserForm">UserForm</a></li><li><a href="global.html#WardSelectDialog">WardSelectDialog</a></li><li><a href="global.html#WorkerStatus">WorkerStatus</a></li><li><a href="global.html#emptyLevel">emptyLevel</a></li><li><a href="global.html#errors">errors</a></li><li><a href="global.html#fieldMap">fieldMap</a></li><li><a href="global.html#getOrGenerateFcmToken">getOrGenerateFcmToken</a></li><li><a href="global.html#handleBlur">handleBlur</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#isOpen">isOpen</a></li><li><a href="global.html#method">method</a></li><li><a href="global.html#onClose">onClose</a></li><li><a href="global.html#onConfirm">onConfirm</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#touched">touched</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useFlutter">useFlutter</a></li><li><a href="global.html#useForm">useForm</a></li><li><a href="global.html#validate">validate</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/forms/ApproverHierarchyForm.jsx</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState } from 'react';
+import FormField from '../ui/FormField';
+import Checkbox from '../ui/Checkbox';
+import { useAuth } from '../../hooks/useAuth';
+
+/**
+ * ApproverHierarchyForm
+ *
+ * This form lets an admin create / edit an ApproverHierarchy.
+ * A hierarchy at minimum includes an "is_active" flag and one or more levels.
+ * We implement a minimal UI that allows an administrator to toggle `is_active` and
+ * add / remove level rows. Each level row lets the user pick a Role and assign a priority
+ * (lower number = higher priority). Roles are fetched once from the API so we can populate
+ * a dropdown.
+ */
+const emptyLevel = { role: '' };
+
+/**
+ * Component for managing an Approver Hierarchy form.
+ * Allows creation and editing of hierarchies including activation status and approval levels.
+ *
+ * @param {object} props - The component props.
+ * @param {object} [props.initialData] - Initial data for the form (for editing).
+ * @param {function} props.onSubmit - Callback function when the form is submitted.
+ * @param {function} props.onCancel - Callback function when the form is cancelled.
+ * @param {boolean} props.loading - Indicates if the form is currently loading or submitting.
+ * @returns {JSX.Element} The ApproverHierarchyForm component.
+ */
+const ApproverHierarchyForm = ({ initialData, onSubmit, onCancel, loading }) => {
+  const { apiService, hospital } = useAuth();
+  const [roles, setRoles] = useState([]);
+
+  const [values, setValues] = useState(() => ({
+    is_active: initialData?.is_active ?? true,
+    levels: initialData?.levels?.length ? initialData.levels : [emptyLevel],
+  }));
+
+  useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        const data = await apiService.getRoles(hospital.id);
+        setRoles(data);
+      } catch (err) {
+        console.error('Failed to load roles', err);
+      }
+    };
+    fetchRoles();
+  }, [apiService, hospital]);
+
+  const handleLevelChange = (idx, field, value) => {
+    setValues((prev) => {
+      const levels = [...prev.levels];
+      levels[idx] = { ...levels[idx], [field]: value };
+      return { ...prev, levels };
+    });
+  };
+
+ /**
+ * Adds a new empty level to the hierarchy.
+ */
+  const addLevel = () => setValues((prev) => ({ ...prev, levels: [...prev.levels, emptyLevel] }));
+
+ /**
+ * Removes a level from the hierarchy at a specific index.
+ * @param {number} idx - The index of the level to remove.
+ */
+  const removeLevel = (idx) => setValues((prev) => ({
+    ...prev,
+    levels: prev.levels.filter((_, i) => i !== idx),
+  }));
+
+ /**
+ * Handles changes to the checkbox input.
+ * Updates the form values state.
+ *
+ * @param {ChangeEvent&lt;HTMLInputElement>} e - The change event object.
+ */
+  const handleCheckbox = (e) => {
+    const { name, checked } = e.target;
+    setValues((prev) => ({ ...prev, [name]: checked }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Validate each level has a role
+    for (const lvl of values.levels) {
+      if (!lvl.role) {
+        alert('Each level must have a role selected');
+        return;
+      }
+    }
+    const payload = {
+      is_active: values.is_active,
+      // Assign priority based on the order in the array
+      levels: values.levels.map((lvl, idx) => ({
+        role: lvl.role,
+        priority: idx + 1,
+      })),
+    };
+    // Pass the structured payload to the parent component
+    onSubmit(payload);
+    return;
+    console.log(values);
+    onSubmit(values);
+  };
+
+  return (
+    &lt;div className="max-w-4xl mx-auto p-4">
+      &lt;form onSubmit={handleSubmit} className="space-y-6">
+        {/* Header Section */}
+        &lt;div className="bg-white rounded-lg border border-gray-200 p-4">
+          &lt;Checkbox
+            name="is_active"
+            label="Hierarchy Active"
+            checked={values.is_active}
+            onChange={handleCheckbox}
+          />
+        &lt;/div>
+
+        {/* Levels Section */}
+        &lt;div className="bg-white rounded-lg border border-gray-200">
+          &lt;div className="p-4 border-b border-gray-200">
+            &lt;div className="flex items-center justify-between">
+              &lt;h4 className="font-semibold text-gray-900">Approval Levels&lt;/h4>
+              &lt;button
+                type="button"
+                onClick={addLevel}
+                className="inline-flex items-center px-3 py-1.5 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-md transition-colors"
+              >
+                &lt;svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  &lt;path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                &lt;/svg>
+                Add Level
+              &lt;/button>
+            &lt;/div>
+          &lt;/div>
+
+          &lt;div className="divide-y divide-gray-200">
+            {values.levels.map((lvl, idx) => (
+              &lt;div key={idx} className="p-4">
+                &lt;div className="flex items-center justify-between mb-3">
+                  &lt;span className="text-sm font-medium text-gray-700">
+                    Level {idx + 1}
+                  &lt;/span>
+                  {values.levels.length > 1 &amp;&amp; (
+                    &lt;button
+                      type="button"
+                      onClick={() => removeLevel(idx)}
+                      className="inline-flex items-center px-2 py-1 text-sm text-red-600 hover:text-red-700 hover:bg-red-50 rounded-md transition-colors"
+                    >
+                      &lt;svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        &lt;path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      &lt;/svg>
+                      Remove
+                    &lt;/button>
+                  )}
+                &lt;/div>
+
+                &lt;div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Role Selection */}
+                  &lt;div className="md:col-span-2">
+                    &lt;label className="block text-sm font-medium text-gray-700 mb-1">
+                      Role
+                    &lt;/label>
+                    &lt;select
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      value={lvl.role}
+                      onChange={(e) => handleLevelChange(idx, 'role', e.target.value)}
+                    >
+                      &lt;option value="">Select a role&lt;/option>
+                      {roles.map((role) => (
+                        &lt;option key={role.id} value={role.id}>
+                          {role.name}
+                        &lt;/option>
+                      ))}
+                    &lt;/select>
+                  &lt;/div>
+
+                  {/* Priority derived from order */}
+                  &lt;div>
+                    &lt;span className="text-sm text-gray-600">Priority: {idx + 1}&lt;/span>
+                  &lt;/div>
+                &lt;/div>
+              &lt;/div>
+            ))}
+          &lt;/div>
+        &lt;/div>
+
+        {/* Action Buttons */}
+        &lt;div className="flex flex-col sm:flex-row gap-3 sm:justify-end">
+          &lt;button
+            type="button"
+            onClick={onCancel}
+            className="w-full sm:w-auto px-6 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={loading}
+          >
+            Cancel
+          &lt;/button>
+          &lt;button
+            type="submit"
+            className="w-full sm:w-auto px-6 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={loading}
+          >
+            {loading ? (
+              &lt;span className="flex items-center justify-center">
+                &lt;svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                  &lt;circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4">&lt;/circle>
+                  &lt;path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">&lt;/path>
+                &lt;/svg>
+                Saving...
+              &lt;/span>
+            ) : (
+              initialData ? 'Update Hierarchy' : 'Create Hierarchy'
+            )}
+          &lt;/button>
+        &lt;/div>
+      &lt;/form>
+    &lt;/div>
+  );
+};
+
+export default ApproverHierarchyForm;</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

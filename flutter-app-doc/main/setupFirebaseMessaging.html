@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the setupFirebaseMessaging function from the main library, for the Dart programming language.">
+  <title>setupFirebaseMessaging function - main library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">hospital_management</a></li>
+    <li><a href="../main/">main.dart</a></li>
+    <li class="self-crumb">setupFirebaseMessaging function</li>
+  </ol>
+  <div class="self-name">setupFirebaseMessaging</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="main&#47;main-library-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-function">setupFirebaseMessaging</span> function 
+ 
+</h1></div>
+
+    <section class="multi-line-signature">
+        
+<span class="returntype"><a href="https://api.flutter.dev/flutter/flutter_test/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+<span class="name ">setupFirebaseMessaging</span>(<wbr>)
+
+        
+
+    </section>
+    
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; setupFirebaseMessaging() async {
+  try {
+    final messaging = FirebaseMessaging.instance;
+
+    &#47;&#47; Request permissions for iOS
+    if (Platform.isIOS || Platform.isMacOS) {
+      NotificationSettings settings = await messaging.requestPermission(
+        alert: true,
+        badge: true,
+        sound: true,
+        provisional: false,
+      );
+    }
+
+    &#47;&#47; Get FCM token
+    final token = await messaging.getToken();
+    debugPrint(&#39;FCM Token: $token&#39;);
+
+    &#47;&#47; Token refresh
+    messaging.onTokenRefresh.listen((newToken) {
+      debugPrint(&#39;FCM Token refreshed: $newToken&#39;);
+    });
+
+    &#47;&#47; Init flutter_local_notifications
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings(&#39;@mipmap&#47;ic_launcher&#39;);
+
+    const InitializationSettings initializationSettings =
+        InitializationSettings(android: initializationSettingsAndroid);
+
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse:
+          (NotificationResponse notificationResponse) async {
+        final String? payload = notificationResponse.payload;
+        if (payload != null) {
+          debugPrint(&#39;Notification tapped with payload: $payload&#39;);
+          try {
+            final messageData = jsonDecode(payload);
+            final String? memoId = messageData[&#39;memo_id&#39;];
+            if (memoId != null) {
+              final dummyMessage = RemoteMessage(data: {&#39;memo_id&#39;: memoId});
+              _handleMessage(dummyMessage);
+            } else {
+              debugPrint(&#39;Memo ID not found in notification payload data.&#39;);
+            }
+          } catch (e) {
+            debugPrint(&#39;Error parsing notification payload: $e&#39;);
+          }
+        }
+      },
+    );
+
+    &#47;&#47; Foreground notification handler
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      debugPrint(&#39;Message received in foreground: ${message.toString()}&#39;);
+
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+
+      if (notification != null &amp;&amp; android != null) {
+        await flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          const NotificationDetails(
+            android: AndroidNotificationDetails(
+              &#39;high_importance_channel&#39;,
+              &#39;High Importance Notifications&#39;,
+              importance: Importance.max,
+              priority: Priority.high,
+              icon: &#39;@mipmap&#47;ic_launcher&#39;,
+            ),
+          ),
+          payload: jsonEncode(message.data),
+        );
+      }
+    });
+
+    &#47;&#47; Background handler
+    debugPrint(&#39;Setting up background message handler.&#39;);
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+    &#47;&#47; Terminated state notification
+    debugPrint(&#39;Checking for initial message...&#39;);
+    final initialMessage = await messaging.getInitialMessage();
+    if (initialMessage != null) {
+      debugPrint(&#39;Initial message received: ${initialMessage.toString()}&#39;);
+      _handleMessage(initialMessage);
+    }
+
+    &#47;&#47; When app is resumed via tapping notification
+    debugPrint(&#39;Setting up onMessageOpenedApp listener.&#39;);
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+  } catch (e) {
+    debugPrint(&#39;FCM setup error: $e&#39;);
+  }
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">hospital_management</a></li>
+    <li><a href="../main/">main</a></li>
+    <li class="self-crumb">setupFirebaseMessaging function</li>
+</ol>
+
+    <h5>main library</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-left-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    hospital_management
+      2.0.1+11
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+
