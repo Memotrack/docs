@@ -7,11 +7,11 @@ Each project’s documentation is stored in its own folder with static HTML file
 
 ## 📂 Repository Structure
 
-- [**flutter-app-doc/**](./tree/main/flutter-app-doc) – Documentation for the Flutter mobile app  
-- [**jango-backend-doc/**](./tree/main/jango-backend-doc/) – Documentation for the Django backend  
-- [**react-web-doc/**](./tree/main/react-web-doc/) – Documentation for the React web app  
-- [**index.html**](./blob/main/index.html) – Common landing page linking all docs  
-- [**README.md**](./blob/main/README.md) – Repository overview  
+- [**flutter-app-doc/**](/tree/main/flutter-app-doc) – Documentation for the Flutter mobile app  
+- [**jango-backend-doc/**](/tree/main/jango-backend-doc/) – Documentation for the Django backend  
+- [**react-web-doc/**](/tree/main/react-web-doc/) – Documentation for the React web app  
+- [**index.html**](/blob/main/index.html) – Common landing page linking all docs  
+- [**README.md**](/blob/main/README.md) – Repository overview  
 
 ---
 
