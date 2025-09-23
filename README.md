@@ -18,28 +18,24 @@ Each project’s documentation is stored in its own folder with static HTML file
 
 ## 🌐 GitHub Pages
 
-https://your-username.github.io/your-repo-name/
+Hosted documentation (if GitHub Pages is enabled):  
+👉 [https://memotrack.github.io/docs/](https://memotrack.github.io/docs/)
 
 ---
 
 ## ✨ Highlights
 
-Centralized hub for project documentation
-
-Organized into separate modules for easy navigation
-
-Root-level landing page for quick access
+- 📌 Centralized hub for project documentation  
+- 📌 Organized into separate modules for easy navigation  
+- 📌 Root-level landing page for quick access  
 
 ---
 
 ## 🛠️ Tech Stacks Covered
 
-Flutter – Mobile App
-
-Django (Python) – Backend
-
-React – Web Frontend
+- **Flutter** – Mobile App  
+- **Django (Python)** – Backend  
+- **React** – Web Frontend  
 
 ---
-
 
