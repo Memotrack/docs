@@ -13,4 +13,4 @@
 
 
 ### 4. Click on Refresh
-![Step 4 screenshot](\photo\471cafb3-617d-44a4-8572-6424f14abc77.webp)
+![Step 4 screenshot](https://github.com/Memotrack/docs/blob/2c576459b479847f96321725d0da7aa2465f4045/manual/photo/471cafb3-617d-44a4-8572-6424f14abc77.webp)
