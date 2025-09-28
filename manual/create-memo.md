@@ -7,11 +7,11 @@
 ![Step 2 screenshot](https://raw.githubusercontent.com/Memotrack/docs/a79ea63058bf945100e7431c4e0a50dbd2c685ff/manual/photo/create%20memo/2.png)
 
 
-### 3. Click on Create
+### 3. Click on Create Button
 ![Step 3 screenshot](https://raw.githubusercontent.com/Memotrack/docs/a79ea63058bf945100e7431c4e0a50dbd2c685ff/manual/photo/create%20memo/3.png)
 
 
-### 4. Click on Change Ward
+### 4. Click on Change Ward If wanted Or Yes
 ![Step 4 screenshot](https://raw.githubusercontent.com/Memotrack/docs/a79ea63058bf945100e7431c4e0a50dbd2c685ff/manual/photo/create%20memo/4.png)
 
 
@@ -19,7 +19,7 @@
 ![Step 5 screenshot](https://raw.githubusercontent.com/Memotrack/docs/a79ea63058bf945100e7431c4e0a50dbd2c685ff/manual/photo/create%20memo/5.png)
 
 
-### 6. Click on LAB WARD…
+### 6. Click on respective ward…
 ![Step 6 screenshot](https://raw.githubusercontent.com/Memotrack/docs/a79ea63058bf945100e7431c4e0a50dbd2c685ff/manual/photo/create%20memo/6.png)
 
 
@@ -27,15 +27,15 @@
 ![Step 7 screenshot](https://raw.githubusercontent.com/Memotrack/docs/a79ea63058bf945100e7431c4e0a50dbd2c685ff/manual/photo/create%20memo/7.png)
 
 
-### 8. Type "test-memo"
+### 8. Type complaints
 ![Step 8 screenshot](https://raw.githubusercontent.com/Memotrack/docs/a79ea63058bf945100e7431c4e0a50dbd2c685ff/manual/photo/create%20memo/8.png)
 
 
-### 9. Type "GH"
+### 9. Type department
 ![Step 9 screenshot](https://raw.githubusercontent.com/Memotrack/docs/a79ea63058bf945100e7431c4e0a50dbd2c685ff/manual/photo/create%20memo/9.png)
 
 
-### 10. Select Responder - Civil from Role to Tag
+### 10. Select Responder Role to Tag
 ![Step 10 screenshot](https://raw.githubusercontent.com/Memotrack/docs/a79ea63058bf945100e7431c4e0a50dbd2c685ff/manual/photo/create%20memo/10.png)
 
 

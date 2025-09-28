@@ -13,7 +13,7 @@
 ![Step 3 screenshot](https://raw.githubusercontent.com/Memotrack/docs/a79ea63058bf945100e7431c4e0a50dbd2c685ff/manual/photo/delete/3.png)
 
 
-### 4. Click on Delete
+### 4. Click on Delete Button
 ![Step 4 screenshot](https://raw.githubusercontent.com/Memotrack/docs/a79ea63058bf945100e7431c4e0a50dbd2c685ff/manual/photo/delete/4.png)
 
 
@@ -21,6 +21,6 @@
 ![Step 5 screenshot](https://raw.githubusercontent.com/Memotrack/docs/a79ea63058bf945100e7431c4e0a50dbd2c685ff/manual/photo/delete/5.png)
 
 
-### 6. View Memo deleted Notificatio
+### 6. View Memo deleted Notification
 ![Step 6 screenshot](https://raw.githubusercontent.com/Memotrack/docs/a79ea63058bf945100e7431c4e0a50dbd2c685ff/manual/photo/delete/6.png)
 
